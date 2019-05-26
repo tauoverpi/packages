@@ -91,6 +91,21 @@
     (home-page "")
     (license license:gpl2)))
 
+(define-public neovim-nerdtree
+  (neovim-plugin
+    #:name "neovim-nerdtree"
+    #:version "0.0.0"
+    #:revision "1"
+    #:commit "4dada8c04fba25e788ea1836c82f9c18c1166b44"
+    #:hash "1dpfzbz02a47g84j5nxhb0qahpzg1fwnm4qyabjni2faz73v7ddk"
+    #:url "https://github.com/scrooloose/nerdtree"
+    #:directories '(autoload doc lib nerdtree_plugin plugin syntax)
+    #:tests #f
+    #:synopsis ""
+    #:description ""
+    #:home-page "https://github.com/scrooloose/nerdtree"
+    #:license license:expat))
+
 (define-public neovim-racket
   (neovim-plugin
     #:name "neovim-racket"
