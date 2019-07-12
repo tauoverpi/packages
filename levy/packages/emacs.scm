@@ -20,6 +20,23 @@
              (base32
               "0yw7klp2a46a0k4bl3vwcr4wrnhlslf84zndayxasylcax2mjn6y"))))
    (build-system emacs-build-system)
+   (arguments
+    `(#:tests? #t
+      #:test-command '("ert-runner")
+      #:phases
+       (modify-phases %standard-phases
+         ;; Move the source files to the top level, which is included in
+         ;; the EMACSLOADPATH.
+         (add-after 'unpack 'move-source-files
+           (lambda _
+             (let ((el-files (find-files "./themes" ".*\\.el$")))
+               (for-each (lambda (f)
+                           (rename-file f (basename f)))
+                         el-files))
+             #t)))))
+
+   (native-inputs `(("emacs-ert-runner" ,emacs-ert-runner)))
+   (inputs `(("emacs-all-the-icons" ,emacs-all-the-icons)))
    (synopsis "")
    (description "")
    (home-page "")
@@ -44,6 +61,24 @@
      (home-page "")
      (license expat))))
 
+(define-public emacs-solaire-mode
+  (package
+   (name "emacs-solaire-mode")
+   (version "1.0.9")
+   (source (origin
+	    (method url-fetch)
+	    (uri (string-append "https://github.com/hlissner/emacs-solaire-mode/archive/v"
+				version
+				".tar.gz"))
+	    (sha256
+	     (base32
+	      "17rpjy00mydlr8jd8y89ly0rgdyps0sz5f6qwfhnda0hrpp7zn6h"))))
+   (build-system emacs-build-system)
+   (synopsis "")
+   (description "")
+   (home-page "")
+   (license #f)))
+
 (define-public emacs-elixir-mode
   (package
    (name "emacs-elixir-mode")
@@ -62,7 +97,7 @@
    (synopsis "")
    (description "")
    (home-page "")
-   (license expat)))
+   (license #f)))
 
 (define-public emacs-alchemist
   (package
@@ -85,7 +120,7 @@
    (synopsis "")
    (description "")
    (home-page "")
-   (license expat)))
+   (license #f)))
 
 (define-public emacs-ats2
   (let ((commit "f18c61587aa78f5d8029021c507ab01397435091")
@@ -108,8 +143,7 @@
     (synopsis "")
     (description "")
     (home-page "")
-    (license expat))))
-
+    (license #f))))
 
 (define-public emacs-metal-mercury-mode
   (let ((commit "2710d467758eafcca9b987eb156ed869cf3783ee")
@@ -129,4 +163,4 @@
     (synopsis "")
     (description "")
     (home-page "")
-    (license expat))))
+    (license #f))))
