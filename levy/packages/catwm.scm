@@ -1,5 +1,6 @@
-(define-module (levy paqckages catwm)
+(define-module (levy packages catwm)
   #:use-module (guix packages)
+  #:use-module (gnu packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
   #:use-module (gnu packages xorg))
