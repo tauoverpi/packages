@@ -91,7 +91,7 @@ trade-offs.")
   (package
     (inherit mercury)
     (name "mercury-rotd")
-    (version "2019-02-05")
+    (version "2019-07-12")
     (source (origin
               (method url-fetch)
               (uri (string-append "http://dl.mercurylang.org/rotd/mercury-srcdist-rotd-"
@@ -99,7 +99,7 @@ trade-offs.")
                                   ".tar.gz"))
               (sha256
                 (base32
-                  "1k32m5qz02ry05sgb5fyn6lvbfjzvcx5517yjsnhqz2j3dimn7py"))))
+                  "153fjp26r28cpavqyh42mk6ksmwpa4vzl52nhg4zl4arx6727vsw"))))
     (arguments
       '(#:tests? #f
         #:phases
@@ -142,7 +142,6 @@ trade-offs.")
     (name "mercury-rotd")
     (inputs
       `(("mercury" ,mercury-rotd-prepgen)
-        ("erlang" ,erlang)
         ,@(package-inputs mercury-rotd-prepgen)))
 
     (arguments

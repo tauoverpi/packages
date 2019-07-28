@@ -42,6 +42,29 @@
    (home-page "")
    (license expat)))
 
+(define-public emacs-doom-modeline
+  (package
+   (name "emacs-doom-modeline")
+   (version "1.8.1")
+   (source (origin
+	    (method url-fetch)
+	    (uri (string-append "https://github.com/seagle0128/doom-modeline/archive/v"
+				version
+				".tar.gz"))
+	    (sha256
+	     (base32
+	      "1bxzxfvzgg0rjnnkvksriakgv1bblgafavfl92gx45w88nx408li"))))
+   (build-system emacs-build-system)
+   (arguments
+    `(#:tests? #f
+      #:test-command '("ert-runner")))
+   (native-inputs `(("emacs-ert-runner" ,emacs-ert-runner)))
+   (inputs `(("emacs-all-the-icons" ,emacs-all-the-icons)))
+   (synopsis "")
+   (description "")
+   (home-page "")
+   (license #f)))
+
 (define-public emacs-monotropic-theme
   (let ((commit "36df566aa8225e303f6c9d90c00740dd678a415e")
         (revision "1"))

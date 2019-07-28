@@ -12,9 +12,11 @@
     (source (origin
               (method url-fetch)
               (uri (string-append
-                     "https://downloads.sourceforge.net/project/ats2-lang/ats2-lang/ats2-postiats-0.3.13/ATS2-Postiats-"
-                     version
-                     ".tgz"))
+                    "https://downloads.sourceforge.net/project/ats2-lang/ats2-lang/ats2-postiats-"
+                    version
+                    "/ATS2-Postiats-"
+                    version
+                    ".tgz"))
               (sha256
                 (base32
                   "08rwhbpx17vzhafy92lxdbarhyly3dxlw06f3n1vkjamz9dzymh0"))))
