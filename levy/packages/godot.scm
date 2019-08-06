@@ -1,6 +1,7 @@
 (define-module (levy packages godot)
   #:use-module (guix packages)
   #:use-module (guix git-download)
+  #:use-module (gnu packages mono)
   #:use-module (gnu packages game-development))
 
 (define-public godot-3.1
@@ -15,4 +16,11 @@
               (sha256
                 (base32
                   "1z37znqzbn0x8s04pb9dxzni9jzl8m59nfrr14vypww42f9l5i7i"))))))
+;    (arguments
+;      (substitute-keyword-arguments (package-arguments)
+;        ((#:scons-flags flags)
+;         `(cons "module_mono_enabled=yes" ,flags))))
+;    (inputs
+;      `(("mono" ,mono)
+;        ,@(package-inputs godot)))))
 

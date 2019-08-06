@@ -178,7 +178,8 @@
                   "07kmix82s61fm4wqi4b2xj73caj2pz56hib40mpsxkv0hz5k5gjx"))))
     (build-system cmake-build-system)
     (arguments
-     '(#:tests? #f))
+     '(#:tests? #f
+       #:parallel-build? #f))
     (native-inputs
      `(("extra-cmake-modules" ,extra-cmake-modules)
        ("nlohmann-json-cpp" ,nlohmann-json-cpp-3.2.0)
