@@ -1,21 +1,25 @@
 (define-module (levy packages godot)
   #:use-module (guix packages)
-  #:use-module (guix git-download)
+  #:use-module (guix download)
   #:use-module (gnu packages mono)
   #:use-module (gnu packages game-development))
 
-(define-public godot-3.1
+(define-public godot-3.1.1
   (package
     (inherit godot)
-    (name "godot-3.1")
+    (name "godot")
+    (version "3.1.1")
     (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                     (url "https://github.com/godotengine/godot")
-                     (commit "320f49f204cfbf9b480fe62aaa7718afb74920a5")))
+              (method url-fetch)
+              (uri (string-append
+                     "https://downloads.tuxfamily.org/godotengine/"
+                     version
+                     "/godot-"
+                     version
+                     "-stable.tar.xz"))
               (sha256
                 (base32
-                  "1z37znqzbn0x8s04pb9dxzni9jzl8m59nfrr14vypww42f9l5i7i"))))))
+                  "098av6h00mwpv1l6ld98xjdd8khq3v6psjna1l5q9wsfa1paf6x2"))))))
 ;    (arguments
 ;      (substitute-keyword-arguments (package-arguments)
 ;        ((#:scons-flags flags)

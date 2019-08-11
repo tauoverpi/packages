@@ -176,6 +176,21 @@ stages/undoes hunks."
     #:home-page "https://github.com/ervandew/supertab"
     #:license license:expat))
 
+(define-public neovim-gdscript3
+  (neovim-plugin
+    #:name "neovim-gdscript3"
+    #:version "0.2"
+    #:revision "1"
+    #:commit "24053ca5e9b222aa4d6e224edd269baa2ae86c8d"
+    #:hash "0b9ghcjiwkkldvg1zwyhi8163dcbg6sh64zrd8nk081qlbrs4shb"
+    #:url "https://github.com/calviken/vim-gdscript3"
+    #:directories '(ftdetect ftplugin indent python syntax)
+    #:tests #f
+    #:synopsis ""
+    #:description ""
+    #:home-page "https://github.com/calviken/vim-gdscript3"
+    #:license #f))
+
 (define-public neovim-rainbow
   (neovim-plugin
     #:name "neovim-rainbow"
