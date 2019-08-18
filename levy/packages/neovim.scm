@@ -176,6 +176,36 @@ stages/undoes hunks."
     #:home-page "https://github.com/ervandew/supertab"
     #:license license:expat))
 
+(define-public neovim-purescript
+  (neovim-plugin
+    #:name "neovim-purescript"
+    #:version "1.0.0"
+    #:revision "1"
+    #:commit "67ca4dc4a0291e5d8c8da48bffc0f3d2c9739e7f"
+    #:hash "1insh39hzbynr6qxb215qxhpifl5m8i5i0d09a3b6v679i7s11i8"
+    #:url "https://github.com/purescript-contrib/purescript-vim"
+    #:directories '(ftdetect ftplugin indent syntax)
+    #:tests #f
+    #:synopsis ""
+    #:description ""
+    #:home-page "https://github.com/purescript-contrib/purescript-vim"
+    #:license #f))
+
+(define-public neovim-psc-ide
+  (neovim-plugin
+    #:name "neovim-psc-ide"
+    #:version "1.0.0"
+    #:revision "1"
+    #:commit "6d4a3cc27e9782b703f6dd61ef5fdf27054bac0f"
+    #:hash "19w0cvrka3klxbh9z1yq873v92rhmxdj68bdnqxzwybf24hgsk9g"
+    #:url "https://github.com/FrigoEU/psc-ide-vim"
+    #:directories '(ftplugin doc syntax_checkers autoload)
+    #:tests #f
+    #:synopsis ""
+    #:description ""
+    #:home-page "https://github.com/purescript-contrib/purescript-vim"
+    #:license #f))
+
 (define-public neovim-gdscript3
   (neovim-plugin
     #:name "neovim-gdscript3"

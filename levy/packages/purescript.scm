@@ -231,4 +231,172 @@ executable              pscpp
     (home-page "")
     (license #f)))
 
-ghc-purescript-native
+(define-public psc-package
+  (package
+    (name "psc-package")
+    (version "0.5.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://codeload.github.com/purescript/psc-package/tar.gz/v"
+               version))
+        (sha256
+          (base32 "171gc0npvnm4c9ipwy8gk688bsvafnc0j0910mib0v7693n3bzbc"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-aeson" ,ghc-aeson)
+        ("ghc-aeson-pretty" ,ghc-aeson-pretty)
+        ("ghc-async" ,ghc-async)
+        ("ghc-either" ,ghc-either)
+        ("ghc-foldl" ,ghc-foldl)
+        ("ghc-optparse-applicative"
+         ,ghc-optparse-applicative)
+        ("ghc-system-filepath" ,ghc-system-filepath)
+        ("ghc-errors" ,ghc-errors)
+        ("ghc-turtle" ,ghc-turtle)))
+    (home-page
+      "https://github.com/purescript/psc-package")
+    (synopsis
+      "An experimental package manager for PureScript")
+    (description "")
+    (license bsd-3)))
+
+(package
+  (name "ghc-spago")
+  (version "0.9.0.0")
+  (source
+    (origin
+      (method url-fetch)
+      (uri (string-append
+             "https://github.com/spacchetti/spago/archive/"
+             version
+             ".tar.gz"))
+      (sha256
+        (base32 "1fppf70zc13dszdar060kx38l7xqjx90qwb2d6mi0a84534srgx5"))))
+  (build-system haskell-build-system)
+  (arguments
+    '(#:phases
+      (modify-phases %standard-phases
+        (add-after 'unpack 'add-cabal-file
+          (lambda _
+            (with-output-to-file "purescript-native.cabal"
+              (lambda _
+                (install-file "app/Main.hs" "src")
+                (display "
+cabal-version: 1.18
+name:                spago
+version:             0.9.0.0
+license:             BSD3
+author:              Justin Woo, Fabrizio Ferrai
+maintainer:          @jusrin00, @fabferrai
+copyright: 2018-2019 Justin Woo, Fabrizio Ferrai
+
+executable               spago
+    main-is:             Spago.hs
+    buildable:           True
+    hs-source-dirs:      src, app
+    build-depends: base >= 4.7 && < 5
+                 , turtle
+                 , optparse-applicative
+                 , base >= 4.7 && < 5
+                 , text < 1.3
+                 , Cabal
+                 , turtle
+                 , either
+                 , filepath
+                 , file-embed
+                 , template-haskell
+                 , aeson
+                 , aeson-pretty
+                 , containers
+                 , bower-json
+                 , dhall
+                 , dhall-json
+                 , bytestring
+                 , prettyprinter
+                 , async-pool
+                 , process
+                 , network-uri
+                 , versions
+                 , lens-family-core
+                 , safe
+                 , fsnotify
+                 , Glob
+                 , stm
+                 , directory
+                 , mtl
+                 , exceptions
+                 , unliftio
+                 , vector
+                 , temporary
+                 , zlib
+                 , tar
+                 , foldl
+                 , http-client
+                 , http-conduit
+                 , time
+                 , either
+                 , semver-range
+                 , ansi-terminal
+                 , unordered-containers
+                 , retry
+                 , github
+    default-extensions: DeriveDataTypeable
+                      , DeriveGeneric
+                      , DerivingStrategies
+                      , DuplicateRecordFields
+                      , GeneralizedNewtypeDeriving
+                      , LambdaCase
+                      , RecordWildCards
+                      , ScopedTypeVariables
+                      , OverloadedStrings
+                      , FlexibleContexts
+                      , ConstraintKinds
+                      , NoImplicitPrelude
+                      , ApplicativeDo
+                      , NamedFieldPuns
+"))))))))
+
+  (inputs
+    `(("ghc-turtle" ,ghc-turtle)
+      ("ghc-optparse-applicative"
+       ,ghc-optparse-applicative)
+      ("ghc-either" ,ghc-either)
+      ("ghc-file-embed" ,ghc-file-embed)
+      ("ghc-aeson" ,ghc-aeson)
+      ("ghc-aeson-pretty" ,ghc-aeson-pretty)
+      ("ghc-bower-json" ,ghc-bower-json)
+      ("ghc-dhall" ,ghc-dhall)
+      ("ghc-dhall-json" ,ghc-dhall-json)
+      ("ghc-prettyprinter" ,ghc-prettyprinter)
+      ("ghc-async-pool" ,ghc-async-pool)
+      ("ghc-network-uri" ,ghc-network-uri)
+      ("ghc-versions" ,ghc-versions)
+      ("ghc-lens-family-core" ,ghc-lens-family-core)
+      ("ghc-safe" ,ghc-safe)
+      ("ghc-fsnotify" ,ghc-fsnotify)
+      ("ghc-glob" ,ghc-glob)
+      ("ghc-stm" ,ghc-stm)
+      ("ghc-exceptions" ,ghc-exceptions)
+      ("ghc-unliftio" ,ghc-unliftio)
+      ("ghc-vector" ,ghc-vector)
+      ("ghc-temporary" ,ghc-temporary)
+      ("ghc-zlib" ,ghc-zlib)
+      ("ghc-tar" ,ghc-tar)
+      ("ghc-foldl" ,ghc-foldl)
+      ("ghc-http-client" ,ghc-http-client)
+      ("ghc-http-conduit" ,ghc-http-conduit)
+      ("ghc-semver-range" ,ghc-semver-range)
+      ("ghc-ansi-terminal" ,ghc-ansi-terminal)
+      ("ghc-unordered-containers"
+       ,ghc-unordered-containers)
+      ("ghc-retry" ,ghc-retry)
+      ("ghc-github" ,ghc-github)))
+  (home-page
+    "http://hackage.haskell.org/package/spago")
+  (synopsis "")
+  (description "")
+  (license #f))
+
+

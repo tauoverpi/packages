@@ -113,7 +113,7 @@
                 #t)))))
       (native-inputs
         `(("pkg-config" ,pkg-config)
-                    ("q3d" ,%q3d-origin)
+          ("q3d" ,%q3d-origin)
           ("libdxfrw" ,%libdxfrw-origin)
           ("flatbuffers" ,%flatbuffers-origin)))
       (inputs
