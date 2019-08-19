@@ -2,7 +2,16 @@
   #:use-module (guix packages)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages base)
+  #:use-module (guix build-system gnu)
+  #:use-module (gnu packages gettext)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages perl)
+  #:use-module (gnu packages python)
+  #:use-module (gnu packages xml)
+  #:use-module (gnu packages cmake)
+  #:use-module (gnu packages pkg-config)
   #:use-module (guix download)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix utils)
   #:use-module (gnu packages mono))
 
@@ -12,33 +21,59 @@
     (version "6.0.0.319")
     (source (origin
               (method url-fetch)
-              (uri (string-append "https://github.com/mono/mono/archive/mono-"
+              (uri (string-append "http://download.mono-project.com/sources/mono/mono-"
                                   version
-                                  ".tar.gz"))
+                                  ".tar.xz"))
               (sha256
                 (base32
-                  "1v2awihsyqziv1a5kzjig6d9b1wxwdrmxrz9810a0mcpj99bl1rs"))))
+                  "06i6ild0cxn4ygb9fg2121l4rg1x3rlcrzkvg5w82s7pifw80k3b"))))
+    (build-system gnu-build-system)
     (arguments
-      (substitute-keyword-arguments (package-arguments mono)
-        ((#:phases phases)
-         `(modify-phases ,phases
-            (add-after 'unpack 'patch-which
-              (lambda _
-                (substitute* "libgc/autogen.sh"
-                  (("/bin/sh") (which "sh")))
-                (substitute* "libgc/configure.ac"
-                  (("/bin/sh") (which "sh")))
-                (substitute* "configure.ac"
-                  (("/bin/sh") (which "sh")))
-                (substitute* "autogen.sh"
-                  (("/bin/sh") (which "sh")))))
-            (delete 'make-reproducible)
-            (delete 'fix-includes)
-            (delete 'patch-tests)))))
-    (native-inputs `(("autoconf" ,autoconf)
-                     ("automake" ,automake)
-                     ("libtool" ,libtool)
-                     ("which" ,which)
-                     ,@(package-native-inputs mono)))))
+      '(#:tests? #f
+        #:phases
+        (modify-phases %standard-phases
+          (replace 'bootstrap
+            (lambda _
+              (copy-file "mono/mini/Makefile.am.in" "mono/mini/Makefile.in")
+              (invoke "autoreconf" "-vfi"))))))
+    (native-inputs
+     `(("gettext" ,gettext-minimal)
+       ("glib" ,glib)
+       ("which" ,which)
+       ("cmake" ,cmake)
+       ("libtool" ,libtool)
+       ("autoconf" ,autoconf)
+       ("automake" ,automake)
+       ("libxslt" ,libxslt)
+       ("perl" ,perl)
+       ("python" ,python-2)))
+    (synopsis "Compiler and libraries for the C# programming language")
+    (description "Mono is a compiler, vm, debugger and set of libraries for
+C#, a C-style programming language from Microsoft that is very similar to
+Java.")
+    (home-page "https://www.mono-project.com/")
+    (license license:x11)))
 
-mono-6.0.0.311
+(define-public fsharp
+  (package
+    (name "fsharp")
+    (version "10.2.3")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/fsharp/fsharp/archive/"
+                                  version
+                                  ".tar.gz"))))
+    (build-system gnu-build-system)
+    (native-inputs
+     `(("libtool" ,libtool)
+       ("autoconf" ,autoconf)
+       ("pkg-config" ,pkg-config)
+       ("automake" ,automake)))
+    (inputs
+      `(("mono-6.0.0.311" ,mono-6.0.0.311)))
+    (synopsis "Compiler and libraries for the C# programming language")
+    (description "Mono is a compiler, vm, debugger and set of libraries for
+C#, a C-style programming language from Microsoft that is very similar to
+Java.")
+    (home-page "https://www.mono-project.com/")
+    (license license:x11)))
