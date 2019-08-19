@@ -62,11 +62,19 @@ Java.")
               (method url-fetch)
               (uri (string-append "https://github.com/fsharp/fsharp/archive/"
                                   version
-                                  ".tar.gz"))))
+                                  ".tar.gz"))
+              (sha256
+                (base32
+                  "0kfc4kh93qjqqzirrvfjkx6s9vf6nwnwh22nj276cwbdganlnzjj"))))
     (build-system gnu-build-system)
+    (arguments
+      '(#:phases
+        (modify-phases %standard-phases
+          (delete 'configure))))
     (native-inputs
      `(("libtool" ,libtool)
        ("autoconf" ,autoconf)
+       ("which" ,which)
        ("pkg-config" ,pkg-config)
        ("automake" ,automake)))
     (inputs
@@ -77,3 +85,5 @@ C#, a C-style programming language from Microsoft that is very similar to
 Java.")
     (home-page "https://www.mono-project.com/")
     (license license:x11)))
+
+fsharp
