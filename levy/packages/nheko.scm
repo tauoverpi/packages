@@ -1,4 +1,5 @@
 (define-module (levy packages nheko)
+  #:use-module (levy packages crypto)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system gnu)
@@ -67,28 +68,6 @@
       (synopsis "")
       (description "")
       (license license:expat))))
-
-(define olm
-  (package
-    (name "olm")
-    (version "3.1.3")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://gitlab.matrix.org/matrix-org/olm/-/archive/"
-                                  version
-                                  "/olm-"
-                                  version
-                                  ".tar.gz"))
-              (sha256
-                (base32
-                  "1zr6bi9kk1410mbawyvsbl1bnzw86wzwmgc7i5ap6i9l96mb1zqh"))))
-    (build-system cmake-build-system)
-    (arguments
-     '(#:tests? #f))
-    (home-page "https://github.com/Nheko-Reborn/mtxclient")
-    (synopsis "")
-    (description "")
-    (license license:expat)))
 
 (define nlohmann-json-cpp-3.2.0
   (package
