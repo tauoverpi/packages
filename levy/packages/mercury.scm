@@ -91,7 +91,7 @@ trade-offs.")
   (package
     (inherit mercury)
     (name "mercury-rotd")
-    (version "2019-07-12")
+    (version "2019-08-19")
     (source (origin
               (method url-fetch)
               (uri (string-append "http://dl.mercurylang.org/rotd/mercury-srcdist-rotd-"
@@ -99,9 +99,10 @@ trade-offs.")
                                   ".tar.gz"))
               (sha256
                 (base32
-                  "153fjp26r28cpavqyh42mk6ksmwpa4vzl52nhg4zl4arx6727vsw"))))
+                  "0k3jr6r5f3ny18gi4snc4nny5d7j2iggjaqs0zhpzryvfyvx23l2"))))
     (arguments
       '(#:tests? #f
+        #:configure-flags '("--enable-minimal-install")
         #:phases
         (modify-phases %standard-phases
           (add-after 'unpack 'patch
@@ -146,6 +147,10 @@ trade-offs.")
 
     (arguments
       '(#:tests? #f
+        #:configure-flags '("--enable-nogc-grades"
+                            "--enable-rbmm-grades"
+                            "--enable-stseg-grades"
+                            "--enable-erlang-grade")
         #:phases
         (modify-phases %standard-phases
           (add-after 'unpack 'patch
@@ -178,3 +183,4 @@ trade-offs.")
                         (("/bin/sh") (which "sh"))
                         (("/bin/pwd") (which "pwd"))
                         (("/bin/rm") (which "rm"))))))))))
+mercury-rotd
