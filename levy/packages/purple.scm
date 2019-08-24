@@ -33,8 +33,8 @@
             (replace 'install
               (lambda* (#:key outputs #:allow-other-keys)
                 (let* ((out (assoc-ref outputs "out"))
-                       (pidgin-2 (string-append out "/lib/pidgin-2/libslack.so"))
-                       (pixmaps (lambda (num) (string-append out "/pixmaps/pidgin/protocols/" num "/slack.png"))))
+                       (pidgin-2 (string-append out "/lib/pidgin/"))
+                       (pixmaps (lambda (num) (string-append out "/share/pixmaps/pidgin/protocols/" num "/"))))
                   (install-file "libslack.so" pidgin-2)
                   (install-file "img/slack16.png" (pixmaps "16"))
                   (install-file "img/slack22.png" (pixmaps "22"))
@@ -72,8 +72,8 @@
             (replace 'install
               (lambda* (#:key outputs #:allow-other-keys)
                 (let* ((out (assoc-ref outputs "out"))
-                       (pidgin-2 (string-append out "/lib/pidgin-2/libmatrix.so"))
-                       (pixmaps (lambda (num) (string-append out "/pixmaps/pidgin/protocols/" num "/matrix.png"))))
+                       (pidgin-2 (string-append out "/lib/pidgin/"))
+                       (pixmaps (lambda (num) (string-append out "/share/pixmaps/pidgin/protocols/" num "/"))))
                   (install-file "libmatrix.so" pidgin-2)
                   (install-file "matrix-16px.png" (pixmaps "16"))
                   (install-file "matrix-22px.png" (pixmaps "22"))
