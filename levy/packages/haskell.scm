@@ -825,6 +825,39 @@ tionality.")
       "In Haskell you very often acquire values using the @with...@ idiom using functions of type @(a -> IO r) -> IO r@.  This idiom forms a @Monad@, which is a special case of the @ContT@ monad (from @transformers@) or the @Codensity@ monad (from @kan-extensions@).  The main purpose behind this package is to provide a restricted form of these monads specialized to this unusually common case. . The reason this package defines a specialized version of these types is to: . * be more beginner-friendly, . * simplify inferred types and error messages, and: . * provide some additional type class instances that would otherwise be orphan instances")
     (license bsd-3)))
 
+(define-public ghc-text
+  (package
+    (name "ghc-text")
+    (version "1.2.4.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/text/text-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0k739i0sjrbl029y5j8n5v1hqa68z00xazvrahjhyl69mp4s5qna"))))
+    (build-system haskell-build-system)
+    (native-inputs
+      `(("ghc-hunit" ,ghc-hunit)
+        ("ghc-quickcheck" ,ghc-quickcheck)
+        ("ghc-quickcheck-unicode"
+         ,ghc-quickcheck-unicode)
+        ("ghc-random" ,ghc-random)
+        ("ghc-test-framework" ,ghc-test-framework)
+        ("ghc-test-framework-hunit"
+         ,ghc-test-framework-hunit)
+        ("ghc-test-framework-quickcheck2"
+         ,ghc-test-framework-quickcheck2)))
+    (home-page "https://github.com/haskell/text")
+    (synopsis
+      "An efficient packed Unicode text type.")
+    (description
+      ". An efficient packed, immutable Unicode text type (both strict and lazy), with a powerful loop fusion optimization framework. . The 'Text' type represents Unicode character strings, in a time and space-efficient manner. This package provides text processing capabilities that are optimized for performance critical use, both in terms of large data quantities and high speed. . The 'Text' type provides character-encoding, type-safe case conversion via whole-string case conversion functions (see \"Data.Text\"). It also provides a range of functions for converting 'Text' values to and from 'ByteStrings', using several standard encodings (see \"Data.Text.Encoding\"). . Efficient locale-sensitive support for text IO is also supported (see \"Data.Text.IO\"). . These modules are intended to be imported qualified, to avoid name clashes with Prelude functions, e.g. . > import qualified Data.Text as T . == ICU Support . To use an extended and very rich family of functions for working with Unicode text (including normalization, regular expressions, non-standard encodings, text breaking, and locales), see the [text-icu package](https://hackage.haskell.org/package/text-icu) based on the well-respected and liberally licensed [ICU library](http://site.icu-project.org/). . == Internal Representation: UTF-16 vs. UTF-8 . Currently the @text@ library uses UTF-16 as its internal representation which is [neither a fixed-width nor always the most dense representation](http://utf8everywhere.org/) for Unicode text. We're currently investigating the feasibility of [changing Text's internal representation to UTF-8](https://github.com/text-utf8) and if you need such a 'Text' type right now you might be interested in using the spin-off packages <https://hackage.haskell.org/package/text-utf8 text-utf8> and <https://hackage.haskell.org/package/text-short text-short>.")
+    (license bsd-2)))
+
 (define-public ghc-stm
   (package
     (name "ghc-stm")
