@@ -94,7 +94,7 @@
                 (method git-fetch)
                 (uri (git-reference
                        (url "https://github.com/solvespace/solvespace")
-                       (recursive? #t)
+                       ;(recursive? #t)
                        (commit commit)))
                 (sha256
                   (base32
@@ -112,7 +112,7 @@
                 (copy-recursively (assoc-ref inputs "q3d") "extlib/q3d")
                 #t)))))
       (native-inputs
-        `(("pkg-config" ,pkg-config)
+        `(("pkg-config" ,pkg-config)))
           ("q3d" ,%q3d-origin)
           ("libdxfrw" ,%libdxfrw-origin)
           ("flatbuffers" ,%flatbuffers-origin)))

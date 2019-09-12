@@ -5,7 +5,8 @@
   #:use-module ((guix licenses) #:prefix license:))
 
 (define (linux-firmware-version)
-  "7bc246451318b3536d9bfd3c4e46d541a9831b33") ; 4.20.13
+  "7307a29961ad2765ebcad162da699d2497c5c3f8")
+
 (define (linux-firmware-source version)
   (origin
     (method git-fetch)
@@ -16,7 +17,7 @@
     (file-name (string-append "linux-firmware-" version "-checkout"))
     (sha256
      (base32
-       "1qxzwjkn6lcm2rp33gd2hdwyngcbhq2zlm6p58r2h14bg5f142kw"))))
+       "1ijs6bky1g88n841lkfrq1wl98p3a723iycrivv0a16ycwknhh94"))))
 
 (define-public iwlwifi-firmware-nonfree
   (package

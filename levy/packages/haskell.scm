@@ -4,6 +4,8 @@
   #:use-module (guix licenses)
   #:use-module (guix build-system haskell)
   #:use-module (gnu packages haskell)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages haskell-web)
   #:use-module (gnu packages haskell-crypto)
   #:use-module (gnu packages haskell-check))
@@ -301,8 +303,6 @@
     (description
       "This library allows you to write WebSocket-capable servers. . An example server: <https://github.com/jaspervdj/websockets/blob/master/example/server.lhs> . An example client: <https://github.com/jaspervdj/websockets/blob/master/example/client.hs> . See also: . * The specification of the WebSocket protocol: <http://www.whatwg.org/specs/web-socket-protocol/> . * The JavaScript API for dealing with WebSockets: <http://www.w3.org/TR/websockets/>")
     (license bsd-3)))
-
-#f
 
 (define-public ghc-wai-websockets
   (package
@@ -2257,4 +2257,418 @@ tionality.")
       "The GitHub API provides programmatic access to the full GitHub Web site, from Issues to Gists to repos down to the underlying git data like references and trees. This library wraps all of that, exposing a basic but Haskell-friendly set of functions and data structures. . For supported endpoints see \"GitHub\" module. . > import qualified GitHub as GH > > main :: IO () > main = do >     possibleUser <- GH.executeRequest' $ GH.userInfoForR \"phadej\" >     print possibleUser . For more of an overview please see the README: <https://github.com/phadej/github/blob/master/README.md>")
     (license bsd-3)))
 
+(define-public ghc-fmlist
+  (package
+    (name "ghc-fmlist")
+    (version "0.9.3")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/fmlist/fmlist-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "1w9nhm2zybdx4c1lalkajwqr8wcs731lfjld2r8gknd7y96x8pwf"))))
+    (build-system haskell-build-system)
+    (home-page
+      "https://github.com/sjoerdvisscher/fmlist")
+    (synopsis "FoldMap lists")
+    (description
+      "FoldMap lists are lists represented by their foldMap function. FoldMap lists have O(1) cons, snoc and append, just like DLists, but other operations might have favorable performance characteristics as well. These wild claims are still completely unverified though.")
+    (license bsd-3)))
+
+(define-public ghc-listlike
+  (package
+    (name "ghc-listlike")
+    (version "4.6.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/ListLike/ListLike-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0m65x8yaq7q50gznln8mga2wrc8cvjx6gw9rim8s7xqcrx6y5zjh"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-vector" ,ghc-vector)
+        ("ghc-dlist" ,ghc-dlist)
+        ("ghc-fmlist" ,ghc-fmlist)
+        ("ghc-utf8-string" ,ghc-utf8-string)))
+    (native-inputs
+      `(("ghc-listlike" ,ghc-listlike)
+        ("ghc-hunit" ,ghc-hunit)
+        ("ghc-quickcheck" ,ghc-quickcheck)
+        ("ghc-random" ,ghc-random)))
+    (home-page "http://github.com/JohnLato/listlike")
+    (synopsis
+      "Generalized support for list-like structures")
+    (description
+      "Generalized support for list-like structures in Haskell. . The ListLike module provides a common interface to the various Haskell types that are list-like.  Predefined interfaces include standard Haskell lists, Arrays, ByteStrings, and lazy ByteStrings.  Custom types can easily be made ListLike instances as well. . ListLike also provides for String-like types, such as String and ByteString, for types that support input and output, and for types that can handle infinite lists.")
+    (license bsd-3)))
+
+(define-public ghc-earley
+  (package
+    (name "ghc-earley")
+    (version "0.13.0.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/Earley/Earley-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "169qjicjj09wg879vp86ali4rrqpw0ikazvdi3i1qi6pl3yvqq0y"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-listlike" ,ghc-listlike)
+        ("ghc-earley" ,ghc-earley)
+        ("ghc-unordered-containers"
+         ,ghc-unordered-containers)))
+    (native-inputs
+      `(("ghc-tasty" ,ghc-tasty)
+        ("ghc-tasty-quickcheck" ,ghc-tasty-quickcheck)
+        ("ghc-tasty-hunit" ,ghc-tasty-hunit)
+        ("ghc-quickcheck" ,ghc-quickcheck)))
+    (home-page
+      "http://hackage.haskell.org/package/Earley")
+    (synopsis
+      "Parsing all context-free grammars using Earley's algorithm.")
+    (description
+      "See <https://www.github.com/ollef/Earley> for more information and <https://github.com/ollef/Earley/tree/master/examples> for examples.")
+    (license bsd-3)))
+
+(package
+  (name "nice-parser")
+  (version "0.0.1")
+  (source #f)
+  (build-system haskell-build-system)
+  (inputs
+    `(("ghc-earley" ,ghc-earley)))
+  (synopsis "A nice bootstrap parser implementation in Ocaml.")
+  (description "A nice parser implementation in Ocaml.")
+  (home-page "https://tauoverpi.github.io/html/parsing.html")
+  (license #f))
+
+(define-public ghc-heap
+  (package
+    (name "ghc-heap")
+    (version "1.0.4")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/heap/heap-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0ahpsfmb76728w71xn4021ad7z752n6aqqgzdpcyis9i22g4ihm4"))))
+    (build-system haskell-build-system)
+    (native-inputs
+      `(("ghc-quickcheck" ,ghc-quickcheck)))
+    (home-page
+      "http://hackage.haskell.org/package/heap")
+    (synopsis "Heaps in Haskell")
+    (description
+      "A flexible Haskell implementation of minimum, maximum, minimum-priority, maximum-priority and custom-ordered heaps.")
+    (license bsd-3)))
+
+(define-public ghc-portmidi
+  (package
+    (name "ghc-portmidi")
+    (version "0.2.0.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/PortMidi/PortMidi-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "1jb722gwgx1fdyv64nj3by22970l3r04ibc3fa3hnp3k4l2jvk0f"))))
+    (build-system haskell-build-system)
+    (home-page "http://github.com/ninegua/PortMidi")
+    (synopsis "A binding for PortMedia/PortMidi")
+    (native-inputs
+      `(("pkg-config" ,pkg-config)))
+    (inputs
+      `(("alsa-lib" ,alsa-lib)))
+    (description
+      "A Haskell binding for PortMedia/PortMidi")
+    (license bsd-3)))
+
+(define-public ghc-hcodecs
+  (package
+    (name "ghc-hcodecs")
+    (version "0.5.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/HCodecs/HCodecs-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0hrib81nw4g7qgka3brypb8k1mg7l37m8gywc7bc44mcg5mn2957"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-random" ,ghc-random)
+        ("ghc-semigroups" ,ghc-semigroups)
+        ("ghc-quickcheck" ,ghc-quickcheck)))
+    (home-page
+      "http://www-db.informatik.uni-tuebingen.de/team/giorgidze")
+    (synopsis
+      "A library to read, write and manipulate MIDI, WAVE, and SoundFont2 files.")
+    (description
+      "The library provides functions to read, write and manipulate MIDI, WAVE and SoundFont2 multimedia files. It is written entirely in Haskell (without any FFI). It uses efficient  parsing and building combinators for binary data stored in ByteStrings (based on the one in 'binary' package). . Correctness of significant parts of the library has been validated with QuickCheck and Haskell Program Coverage (HPC) tool-kits.")
+    (license bsd-3)))
+
+(define-public ghc-lazysmallcheck
+  (package
+    (name "ghc-lazysmallcheck")
+    (version "0.6")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/lazysmallcheck/lazysmallcheck-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0lqggm75m1qd34lzqj3ibvnjwhjqvq16cab8zxm4yzn7j2sxzm4x"))))
+    (build-system haskell-build-system)
+    (home-page
+      "http://www.cs.york.ac.uk/~mfn/lazysmallcheck/")
+    (synopsis
+      "A library for demand-driven testing of Haskell programs")
+    (description
+      "Lazy SmallCheck is a library for exhaustive, demand-driven testing of Haskell programs.  It is based on the idea that if a property holds for a partially-defined input then it must also hold for all fully-defined refinements of the that input.  Compared to ``eager'' input generation as in SmallCheck, Lazy SmallCheck may require significantly fewer test-cases to verify a property for all inputs up to a given depth.")
+    (license bsd-3)))
+
+(define-public ghc-stream
+  (package
+    (name "ghc-stream")
+    (version "0.4.7.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/Stream/Stream-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "1l87l0kl4awzdyx6b28npwy6xf03r39d89iharsh06zgnd4y42wr"))))
+    (build-system haskell-build-system)
+    (native-inputs
+      `(("ghc-lazysmallcheck" ,ghc-lazysmallcheck)
+        ("ghc-quickcheck" ,ghc-quickcheck)))
+    (home-page
+      "http://hackage.haskell.org/package/Stream")
+    (synopsis
+      "A library for manipulating infinite lists.")
+    (description
+      "This package implements functions, analogous to those from Data.List, to create and manipulate infinite lists: @data Stream a = Cons a (Stream a)@. It provides alternative definitions for those Prelude functions that make sense for such streams. Note that this package has (almost) nothing to do with the work on /Stream Fusion/ by Duncan Coutts, Roman Leshchinskiy, and Don Stewart.")
+    (license bsd-3)))
+
+(define-public ghc-arrows
+  (package
+    (name "ghc-arrows")
+    (version "0.4.4.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/arrows/arrows-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "02db4byzz8xb4c36y0v867g9kd3a9p04r4cj1np717k20qrwjnpn"))))
+    (build-system haskell-build-system)
+    (inputs `(("ghc-stream" ,ghc-stream)))
+    (home-page "http://www.haskell.org/arrows/")
+    (synopsis "Arrow classes and transformers")
+    (description
+      "Several classes that extend the Arrow class, and some transformers that implement or lift these classes.")
+    (license bsd-3)))
+
+(define-public ghc-euterpea
+  (package
+    (name "ghc-euterpea")
+    (version "2.0.7")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/Euterpea/Euterpea-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0kxdilxzg0dgz1684csbyfv4cifh9d92ac6pwp6dnrcwwpwskiw8"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-arrows" ,ghc-arrows)
+        ("ghc-random" ,ghc-random)
+        ("ghc-portmidi" ,ghc-portmidi)
+        ("ghc-hcodecs" ,ghc-hcodecs)
+        ("ghc-heap" ,ghc-heap)))
+    (home-page "http://www.euterpea.com")
+    (synopsis
+      "Library for computer music research and education")
+    (description
+      "Euterpea is a domain-specific language embedded in Haskell for computer music research, education, and development, providing both note-level and signal-level abstractions.  It is a descendant of Haskore and HasSound, and is intended for both educational purposes as well as serious computer music applications.  Euterpea is a wide-spectrum DSL, suitable for high-level music representation, algorithmic composition, and analysis; mid-level concepts such as MIDI; and low-level audio processing, sound synthesis, and instrument design.")
+    (license bsd-3)))
+
+(define-public ghc-vivid-supercollider
+  (package
+    (name "ghc-vivid-supercollider")
+    (version "0.4.1.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/vivid-supercollider/vivid-supercollider-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "1jr132l3zgwxz3vnnqbm1ycms29izsbn6kdddq7204zz9y7hx96j"))))
+    (build-system haskell-build-system)
+    (arguments
+      '(#:tests? #f))
+    (inputs
+      `(("ghc-vivid-osc" ,ghc-vivid-osc)
+        ("ghc-utf8-string" ,ghc-utf8-string)
+        ("ghc-split" ,ghc-split)
+        ("ghc-cereal" ,ghc-cereal)))
+    (native-inputs
+      `(("ghc-microspec" ,ghc-microspec)
+        ("ghc-quickcheck" ,ghc-quickcheck)))
+    (home-page
+      "http://hackage.haskell.org/package/vivid-supercollider")
+    (synopsis
+      "Implementation of SuperCollider server specifications")
+    (description
+      "An interface-agnostic implementation of specs for SuperCollider server types and commands. - Server Command Reference - Synth Definition File Format . Note this is an in-progress (incomplete) implementation. Currently only the server commands needed for the \\\"vivid\\\" package are supported.")
+    (license "'gpl??")))
+
+(define-public ghc-microspec
+  (package
+    (name "ghc-microspec")
+    (version "0.2.1.3")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/microspec/microspec-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0615gdbsk7i3w71adjp69zabw4mli965wffm2h846hp6pjj31xcb"))))
+    (build-system haskell-build-system)
+    (inputs `(("ghc-quickcheck" ,ghc-quickcheck)))
+    (home-page
+      "http://hackage.haskell.org/package/microspec")
+    (synopsis
+      "Tiny QuickCheck test library with minimal dependencies")
+    (description
+      "A tiny (1 module, <500 lines) property-based (and unit) testing library with minimal dependencies. . Instead of reinventing the wheel (<https://xkcd.com/927>), we use a RSpec/HSpec-like DSL and run tests with QuickCheck. . For many use-cases, microspec is a drop-in replacement for hspec. . > import Test.Microspec > > main :: IO () > main = microspec $ do >    describe \"replicate\" $ do >       it \"doubles with 2\" $ >          replicate 2 'x' === \"xx\" >       it \"creates a list of the right size\" $ >          \\(Positive n) -> length (replicate n 'x') === n > >    describe \"reverse\" $ do >       it \"reverse . reverse === id\" $ \\l -> >          reverse (reverse l) === (l :: [Int]) > >    describe \"tail\" $ >       it \"length is -1\" $ \\(NonEmpty l) -> >          length (tail l :: [Int]) === length l - 1 > >    describe \"solve the halting problem\" $ >       pending")
+    (license bsd-3)))
+
+(define-public ghc-vivid-osc
+  (package
+    (name "ghc-vivid-osc")
+    (version "0.5.0.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/vivid-osc/vivid-osc-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "041m4k1aqkw35fp7l03i3ba1jyppr8lia2v2zyq7v8yzby8ngys6"))))
+    (build-system haskell-build-system)
+    (inputs `(("ghc-cereal" ,ghc-cereal)))
+    (native-inputs
+      `(("ghc-microspec" ,ghc-microspec)))
+    (home-page
+      "http://hackage.haskell.org/package/vivid-osc")
+    (synopsis "Open Sound Control encode/decode")
+    (description
+      "Small, simple, and well-tested implementation of the Open Sound Control message format. . Example usage: . >>> :set -XOverloadedStrings >>> msg = OSC \"/foo\" [OSC_S \"bar\", OSC_I 9, OSC_F 0.1, OSC_B \"this-is-binary\"] >>> :t msg > msg :: OSC >>> :t encodeOSC msg > encodeOSC msg :: ByteString >>> decodeOSC (encodeOSC msg) == Right msg > True . Sending it over UDP (e.g. to TidalCycles), using the 'network' package: . @ &#123;&#45;\\# LANGUAGE OverloadedStrings \\#&#45;&#125; @ . > import Network.Socket > import Network.Socket.ByteString as SB > > import Vivid.OSC > > main = do >    -- Boring Network.Socket setup: >    (a:_) <- getAddrInfo Nothing (Just \"127.0.0.1\") (Just \"57120\") >    s <- socket (addrFamily a) Datagram defaultProtocol >    connect s (addrAddress a) > >    -- The interesting part: >    SB.send s $ encodeOSC $ >       OSC \"/play2\" [OSC_S \"cps\", OSC_F 1.2, OSC_S \"s\", OSC_S \"bd\"]")
+    (license "'gpl??")))
+
+(define-public ghc-random-shuffle
+  (package
+    (name "ghc-random-shuffle")
+    (version "0.0.4")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/random-shuffle/random-shuffle-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0586bnlh0g2isc44jbjvafkcl4yw6lp1db8x6vr0pza0y08l8w2j"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-random" ,ghc-random)
+        ("ghc-monadrandom" ,ghc-monadrandom)))
+    (home-page
+      "http://hackage.haskell.org/package/random-shuffle")
+    (synopsis "Random shuffle implementation.")
+    (description
+      "Random shuffle implementation, on immutable lists. Based on `perfect shuffle' implementation by Oleg Kiselyov, available on http://okmij.org/ftp/Haskell/perfect-shuffle.txt")
+    (license bsd-3)))
+
+(define-public ghc-vivid
+  (package
+    (name "ghc-vivid")
+    (version "0.4.2.3")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/vivid/vivid-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0awm9cnjgfqx1qf6jsnwmf0kxqxwny82q1ddqna8ilqcdrbsxh0i"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-hashable" ,ghc-hashable)
+        ("ghc-monadrandom" ,ghc-monadrandom)
+        ("ghc-network" ,ghc-network)
+        ("ghc-random" ,ghc-random)
+        ("ghc-random-shuffle" ,ghc-random-shuffle)
+        ("ghc-split" ,ghc-split)
+        ("ghc-utf8-string" ,ghc-utf8-string)
+        ("ghc-vivid-osc" ,ghc-vivid-osc)
+        ("ghc-vivid-supercollider"
+         ,ghc-vivid-supercollider)))
+    (home-page
+      "http://hackage.haskell.org/package/vivid")
+    (synopsis "Sound synthesis with SuperCollider")
+    (description
+      "Music and sound synthesis with SuperCollider. . Example usage (after installing and booting SuperCollider): . @ &#123;&#45;\\# LANGUAGE DataKinds, ExtendedDefaultRules \\#&#45;&#125; @ . > import Vivid > > playSong :: VividAction m => m () > playSong = do >    fork $ do >       s0 <- synth theSound (36 ::I \"note\") >       wait 1 >       free s0 >    s1 <- synth theSound (60 ::I \"note\") >    forM_ [62,66,64] $ \
+ote -> do >       wait (1/4) >       set s1 (note ::I \"note\") >    wait (1/4) >    free s1 > > theSound :: SynthDef '[\"note\"] > theSound = sd (0 ::I \"note\") $ do >    wobble <- sinOsc (freq_ 5) ? KR ~* 10 ~+ 10 >    s <- 0.1 ~* sinOsc (freq_ $ midiCPS (V::V \"note\") ~+ wobble) >    out 0 [s,s] > > main :: IO () > main = do >    putStrLn \"Simplest:\" >    playSong > >    putStrLn \"With precise timing:\" >    doScheduledIn 0.1 playSong >    wait 1 > >    putStrLn \"Written to a file, non-realtime synthesis:\" >    putStrLn \"(Need to quit the running server for NRT)\" >    quitSCServer >    writeNRT \"song.wav\" playSong")
+    (license "'gpl??")))
 

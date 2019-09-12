@@ -15,14 +15,13 @@
   (package
     (inherit linux-libre)
     (name "linux-nonfree")
-    (version "5.0.5")
+    (version "5.2.2")
     (source (origin
               (method url-fetch)
               (uri (linux-nonfree-urls version))
               (sha256
                (base32
-                 "1l4l5kqmakqhkc59nha363866d5gkbc94mhnpyh802may9xq1gaz"
-                 ))))
+                 "173da67d51qcjwrczqsfd6g9phzazqzr11xfxwlf54ckd6117ng5"))))
     (synopsis "Mainline Linux kernel, nonfree binary blobs included")
     (description "Linux is a kernel.")
     (license license:gpl2) ; and non-free firmware

@@ -3,6 +3,9 @@
   #:use-module (guix download)
   #:use-module (guix build-system ocaml)
   #:use-module (guix build-system dune)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu packages multiprecision)
+  #:use-module (gnu packages maths)
   #:use-module (gnu packages ocaml))
 
 (define-public ocaml-process
@@ -43,11 +46,14 @@
         (sha256
           (base32
             "1549arsx6p6zp1aca6y8cs9gxa9jwfjabk7dp6zf43ig7xkrrzmf"))))
-    (build-system ocaml-build-system)
+    (build-system dune-build-system)
+    (arguments '(#:tests? #f))
     (inputs
       `(("ocaml-yojson" ,ocaml-yojson)
         ("ocaml-result" ,ocaml-result)
         ("ocaml-ppx-deriving" ,ocaml-ppx-deriving)
+        ("ocaml-migrate-parsetree"
+         ,ocaml-migrate-parsetree)
         ("dune" ,dune)))
     (native-inputs
       `(("ocaml-ppx-tools" ,ocaml-ppx-tools)
@@ -75,10 +81,10 @@ a JSON codec generator.")
         (sha256
           (base32
             "1r4jp0516378js62ss50a9s8ql2pm8lfdd3mnk214hp7s0kb17fl"))))
-    (build-system ocaml-build-system)
+    (build-system dune-build-system)
+    (arguments '(#:tests? #f))
     (inputs
-      `(("dune" ,dune)
-        ("ocaml-migrate-parsetree"
+      `(("ocaml-migrate-parsetree"
          ,ocaml-migrate-parsetree)))
     (home-page "https://github.com/diml/ppxfind")
     (synopsis "Tool combining ocamlfind and ppx")
@@ -124,10 +130,10 @@ to use old style ppx rewriters with jbuilder.
         (sha256
           (base32
             "0d6cdgk6kdi64l4q4l6hs2zln5js76q0yn94yriz38b5rgs5mn62"))))
-    (build-system ocaml-build-system)
+    (build-system dune-build-system)
+    (arguments '(#:tests? #f))
     (inputs
-      `(("dune" ,dune)
-        ("ocaml-migrate-parsetree"
+      `(("ocaml-migrate-parsetree"
          ,ocaml-migrate-parsetree)
         ("ocaml-ppx-derivers" ,ocaml-ppx-derivers)
         ("ocaml-ppx-tools" ,ocaml-ppx-tools)
@@ -151,21 +157,26 @@ for common tasks.
 (define-public ocaml-stdint
   (package
     (name "ocaml-stdint")
-    (version "0.5.1")
+    (version "0.5.0")
     (source
       (origin
         (method url-fetch)
-        (uri "https://github.com/andrenth/ocaml-stdint/archive/0.5.1.tar.gz")
+        (uri (string-append "https://github.com/andrenth/ocaml-stdint/archive/"
+                            version
+                            ".tar.gz"))
         (sha256
           (base32
-            "0mw781mwqv3qm707kaa72js2j2zrgsknl9ynnn04d3lvmxfasyfq"))))
-    (build-system dune-build-system)
+            "1yrdx16cqnmc7f1pjls9mzymsh23cx8j08is7x3vspmyplb4p7g9"))))
+    (build-system ocaml-build-system)
     (arguments
-      '(#:phases
-        (modify-phases %standard-phases
-          (add-after 'unpack 'dune-upgrade
-            (lambda _
-              (invoke "dune" "upgrade"))))))
+      '(#:tests? #f))
+;        #:phases
+;        (modify-phases %standard-phases
+;;          (add-after 'unpack 'dune-upgrade
+;            (lambda _
+;              (invoke "dune" "upgrade"))))))
+
+    (native-inputs `(("ocamlbuild" ,ocamlbuild)))
     (home-page
       "https://github.com/andrenth/ocaml-stdint")
     (synopsis
@@ -188,11 +199,16 @@ conversion to and from buffers in both big endian and little endian byte order."
     (source
       (origin
         (method url-fetch)
-        (uri "https://github.com/FStarLang/FStar/archive/V0.9.7.0-alpha1.zip")
+        (uri "https://github.com/FStarLang/FStar/archive/V0.9.7.0-alpha1.tar.gz")
         (sha256
           (base32
-            "1jmsy0pz2vd9xhi3nddjyqsiv72gzai6f00j7kzz3mnd1qbb2cxw"))))
+            "1sgz1z2v6bd0mz870rl77qni2hi2k25mgpf0sqzlvgiaqblzsyd7"))))
     (build-system ocaml-build-system)
+    (arguments
+      '(#:tests? #f
+        #:phases
+        (modify-phases %standard-phases
+          (delete 'configure))))
     (inputs
       `(("ocaml-batteries" ,ocaml-batteries)
         ("ocaml-zarith" ,ocaml-zarith)
@@ -202,13 +218,21 @@ conversion to and from buffers in both big endian and little endian byte order."
         ("ocaml-menhir" ,ocaml-menhir)
         ("ocaml-pprint" ,ocaml-pprint)
         ("ocaml-ulex" ,ocaml-ulex)
+        ("ocaml-ppx-tools" ,ocaml-ppx-tools)
+        ("ocaml-easy-format" ,ocaml-easy-format)
+        ("ocaml-biniou" ,ocaml-biniou)
+        ("z3" ,z3)
+        ("gmp" ,gmp)
         ("ocaml-ppx-deriving" ,ocaml-ppx-deriving)
         ("ocaml-ppx-deriving-yojson"
          ,ocaml-ppx-deriving-yojson)
         ("ocaml-process" ,ocaml-process)
         ("ocaml-migrate-parsetree"
          ,ocaml-migrate-parsetree)))
-    (native-inputs `(("ocamlbuild" ,ocamlbuild)))
+    (native-inputs
+      `(("ocamlbuild" ,ocamlbuild)
+        ("git" ,git)
+        ("camlp4" ,camlp4)))
     (home-page "http://fstar-lang.org")
     (synopsis
       "Verification system for effectful programs")

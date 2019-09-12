@@ -24,3 +24,21 @@
 Dotsies is optimized for reading. The letters in each word smoosh together,
 so words look like shapes.")
     (license silofl1.1)))
+
+(define-public font-euclid-initials
+  (package
+    (name "font-euclid-initials")
+    (version "1.0")
+    (source
+      (origin
+        (method url-fetch/zipbomb)
+        (uri "https://www.c82.net/downloads/euclid-initials-font.zip")
+        (sha256
+          (base32
+            "089zckwzggdcpn8ivdcr2rkbg5lms045d0gdcfydkin97s5fjlmm"))))
+    (build-system font-build-system)
+    (home-page "http://dotsies.org")
+    (synopsis "")
+    (description "")
+    (license silofl1.1)))
+

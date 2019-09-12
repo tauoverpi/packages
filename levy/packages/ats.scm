@@ -27,7 +27,8 @@
         (modify-phases %standard-phases
           (replace 'build
             (lambda _
-              (system* "make" "all")))
+              (system* "make" "all")
+              #t))
           (delete 'validate-runpath))))
     (inputs
       `(("gmp" ,gmp)))
