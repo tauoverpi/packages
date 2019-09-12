@@ -825,6 +825,32 @@ tionality.")
       "In Haskell you very often acquire values using the @with...@ idiom using functions of type @(a -> IO r) -> IO r@.  This idiom forms a @Monad@, which is a special case of the @ContT@ monad (from @transformers@) or the @Codensity@ monad (from @kan-extensions@).  The main purpose behind this package is to provide a restricted form of these monads specialized to this unusually common case. . The reason this package defines a specialized version of these types is to: . * be more beginner-friendly, . * simplify inferred types and error messages, and: . * provide some additional type class instances that would otherwise be orphan instances")
     (license bsd-3)))
 
+(define-public ghc-stm
+  (package
+    (name "ghc-stm")
+    (version "2.5.0.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/stm/stm-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "1illcj8zgzmpl91hzgk0j74ha436a379gw13siq4gifbcrf6iqsr"))))
+    (build-system haskell-build-system)
+    (arguments
+      `(#:cabal-revision
+        ("1"
+         "189fxk75h7n27kw7ndyn8nkxm3117qdh1dpag1mcs487kxghff62")))
+    (home-page
+      "https://wiki.haskell.org/Software_transactional_memory")
+    (synopsis "Software Transactional Memory")
+    (description
+      "Software Transactional Memory, or STM, is an abstraction for concurrent communication. The main benefits of STM are /composability/ and /modularity/. That is, using STM you can write concurrent abstractions that can be easily composed with any other abstraction built using STM, without exposing the details of how your abstraction ensures safety. This is typically not the case with other forms of concurrent communication, such as locks or 'MVar's.")
+    (license bsd-3)))
+
 (define-public ghc-turtle
   (package
     (name "ghc-turtle")
@@ -1428,8 +1454,7 @@ tionality.")
     (license bsd-3)))
 
 (define ghc-megaparsec-7
-  (package
-    (inherit ghc-megaparsec)
+  (package/inherit ghc-megaparsec
     (version "7.0.0")
     (arguments '())
     (source
