@@ -47,13 +47,13 @@
    (name "emacs-doom-modeline")
    (version "1.8.1")
    (source (origin
-	    (method url-fetch)
-	    (uri (string-append "https://github.com/seagle0128/doom-modeline/archive/v"
-				version
-				".tar.gz"))
-	    (sha256
-	     (base32
-	      "1bxzxfvzgg0rjnnkvksriakgv1bblgafavfl92gx45w88nx408li"))))
+      (method url-fetch)
+      (uri (string-append "https://github.com/seagle0128/doom-modeline/archive/v"
+        version
+        ".tar.gz"))
+      (sha256
+       (base32
+        "1bxzxfvzgg0rjnnkvksriakgv1bblgafavfl92gx45w88nx408li"))))
    (build-system emacs-build-system)
    (arguments
     `(#:tests? #f
@@ -89,13 +89,13 @@
    (name "emacs-solaire-mode")
    (version "1.0.9")
    (source (origin
-	    (method url-fetch)
-	    (uri (string-append "https://github.com/hlissner/emacs-solaire-mode/archive/v"
-				version
-				".tar.gz"))
-	    (sha256
-	     (base32
-	      "17rpjy00mydlr8jd8y89ly0rgdyps0sz5f6qwfhnda0hrpp7zn6h"))))
+      (method url-fetch)
+      (uri (string-append "https://github.com/hlissner/emacs-solaire-mode/archive/v"
+        version
+        ".tar.gz"))
+      (sha256
+       (base32
+        "17rpjy00mydlr8jd8y89ly0rgdyps0sz5f6qwfhnda0hrpp7zn6h"))))
    (build-system emacs-build-system)
    (synopsis "")
    (description "")
@@ -144,6 +144,28 @@
    (description "")
    (home-page "")
    (license #f)))
+
+(define-public emacs-jdee
+  (package
+    (name "emacs-jdee")
+    (version "2.4.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/jdee-emacs/jdee/archive/"
+                                  version
+                                  ".tar.gz"))
+              (sha256
+                (base32
+                  "08wg90k6p06kw24jzz76pqh7kfd85y5x05aqv7fhjyp1cwlfn2wh"))))
+    (build-system emacs-build-system)
+    (inputs
+      `(("emacs-flycheck" ,emacs-flycheck)
+        ("emacs-dash" ,emacs-dash)
+        ("emacs-memoize" ,emacs-memoize)))
+    (synopsis "The JDEE is an add-on software package that turns Emacs into a comprehensive system for creating, editing, debugging, and documenting Java applications.")
+    (description "The JDEE is an add-on software package that turns Emacs into a comprehensive system for creating, editing, debugging, and documenting Java applications.")
+    (home-page "")
+    (license #f)))
 
 (define-public emacs-ats2
   (let ((commit "f18c61587aa78f5d8029021c507ab01397435091")
