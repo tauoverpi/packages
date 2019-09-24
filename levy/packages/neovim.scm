@@ -327,3 +327,20 @@ powerful configuration."
     #:description "Idris interaction and syntax plugin"
     #:home-page "https://github.com/idris-hackers/idris-vim"
     #:license license:expat))
+
+(define-public neovim-alchemist
+  (neovim-plugin
+    #:name "neovim-alchemist"
+    #:version "0.0.0"
+    #:revision "1"
+    #:commit "336b3f549cc6028db7bf8a43f725b93250f9cae1"
+    #:hash "19wzrydm1qciwagklhl7ln37ax69jfgzfw55k4cxbx7g972dg2s3"
+    #:url "https://github.com/slashmili/alchemist.vim"
+    #:directories '(after autoload doc elixir_sense pythonx rplugin syntax t elixir_sense.py elixir_sense_client erl_terms.py)
+    #:tests #f
+    #:synopsis ""
+    #:description ""
+    #:home-page ""
+    #:license license:expat))
+
+neovim-alchemist
