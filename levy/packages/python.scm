@@ -8,6 +8,7 @@
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages check)
   #:use-module (guix download)
+  #:use-module (guix git-download)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system python))
 
@@ -163,3 +164,48 @@
       "A Matrix-Telegram hybrid puppeting/relaybot bridge.")
     (license #f)))
 
+(define-public python-matrix-client
+  (package
+    (name "python-matrix-client")
+    (version "0.3.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "matrix-client" version))
+        (sha256
+          (base32
+            "1mgjd0ymf9mvqjkvgx3xjhxap7rzdmpa21wfy0cxbw2xcswcrqyw"))))
+    (build-system python-build-system)
+    (propagated-inputs
+      `(("python-requests" ,python-requests)))
+    (native-inputs
+      `(("python-pytest-runner" ,python-pytest-runner)
+        ("python-pytest" ,python-pytest)
+        ("python-responses" ,python-responses)))
+    (home-page
+      "https://github.com/matrix-org/matrix-python-sdk")
+    (synopsis "Client-Server SDK for Matrix")
+    (description "Client-Server SDK for Matrix")
+    (license #f)))
+
+(define-public python-matrix-dl
+  (let ((commit "b24b9c702b19b88a07b6da6ae91b659179fee1fe")
+        (revision "1"))
+    (package
+      (name "python-matrix-dl")
+      (version (string-append name "-" revision "." (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                       (url "https://gitlab.gnome.org/thiblahute/matrix-dl")
+                       (commit commit)))
+                (sha256
+                  (base32
+                    "01lkq0igzcy7cnvbrrqlc1jpbqvxdp8s6ma16blml6pd1imbxk7b"))))
+      (build-system python-build-system)
+      (propagated-inputs
+        `(("python-matrix-client" ,python-matrix-client)))
+      (home-page "https://gitlab.gnome.org/thiblahute/matrix-dl")
+      (synopsis "")
+      (description "")
+      (license #f))))

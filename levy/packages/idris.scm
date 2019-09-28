@@ -1,4 +1,5 @@
 (define-module (levy packages idris)
+  #:use-module (levy packages haskell)
   #:use-module (guix packages)
   #:use-module (gnu packages)
   #:use-module (guix download)
