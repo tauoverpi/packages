@@ -343,4 +343,34 @@ powerful configuration."
     #:home-page ""
     #:license license:expat))
 
-neovim-alchemist
+;(define-public neovim-grammarous
+;  (package
+;    (name "neovim-grammarous")
+;    (version "0.0.0")
+;    (source (origin
+;              (method git-fetch)
+;              (uri (git-reference
+;                     (url "https://github.com/rhysd/vim-grammarous")
+;                     (commit "083cbee6094c9ec347d7c75af421be27d2ec7e70")))
+;              (hash "1cxycr2ijzxn9d5xgp9ri4f2i4d87a3100nsc11iwa2bzir4xsiz")))
+;    (arguments
+;      '(#:tests? #f
+;        #:phases
+;        (modify-phases %standard-phases
+;           (delete 'configure)
+;           (delete 'build)
+;           (replace 'install
+;             (lambda* (#:key outputs #:allow-other-keys)
+;               (let* ((out (assoc-ref outputs "out"))
+;                      (vimfiles (string-append out "/share/nvim/site"))
+;                      ,@(map (lambda (x)
+;                               `(,x (string-append vimfiles "/" ,(symbol->string x))))
+;                             directories))
+;                 ,@(map (lambda (x)
+;                          `(copy-recursively ,(symbol->string x) ,x))
+;                        directories)
+;                 #t))))))
+;    (synopsis "vim-grammarous is a powerful grammar checker for Vim.")
+;    (description "vim-grammarous is a powerful grammar checker for Vim.")
+;    (home-page "https://github.com/rhysd/vim-grammarous")
+;    (license #f)))

@@ -31,6 +31,43 @@
       "Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.")
     (license license:expat)))
 
+(define-public python-telegram-export
+  (package
+    (name "python-telegram-export")
+    (version "1.8.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "telegram-export" version))
+        (sha256
+          (base32
+            "0dbvy5bi9ryl88wpv782smldv3mv9pwy21z0xpmngf5gbn12iwy6"))))
+    (build-system python-build-system)
+    (arguments '(#:tests? #f))
+    (propagated-inputs
+      `(("python-appdirs" ,python-appdirs)
+        ("python-async-generator"
+         ,python-async-generator)
+        ("python-telethon"
+         ,(package/inherit python-telethon
+            (version "1.4.3")
+            (arguments '(#:tests? #f))
+            (source
+                  (origin
+                    (method url-fetch)
+                    (uri (pypi-uri "Telethon" version))
+                    (sha256
+                      (base32
+                        "1igslvhd743qy9p4kfs7lg09s8d5vhn9jhzngpv12797569p4lcj"))))))
+        ("python-tqdm" ,python-tqdm)))
+    (home-page
+      "https://github.com/expectocode/telegram-export")
+    (synopsis
+      "A tool to download Telegram data (users, chats, messages, and media) into a database (and display the saved data).")
+    (description
+      "A tool to download Telegram data (users, chats, messages, and media) into a database (and display the saved data).")
+    (license #f)))
+
 (define-public python-telethon-session-sqlalchemy
   (package
     (name "python-telethon-session-sqlalchemy")
