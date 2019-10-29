@@ -33,9 +33,10 @@
           (modify-phases %standard-phases
             (replace 'install
               (lambda* (#:key inputs outputs #:allow-other-keys)
-                (let ((out (assoc-ref outputs "out"))
-                      (bin (string-append "/bin/")))
-                  (copy-recursively "bin" out)
+                (let* ((out (assoc-ref outputs "out"))
+                       (bin (string-append out "/bin/")))
+                  (mkdir-p bin)
+                  (copy-recursively "bin" bin)
                   #t))))))
       (native-inputs
         `(("pkg-config" ,pkg-config)))

@@ -42,3 +42,19 @@ so words look like shapes.")
     (description "")
     (license silofl1.1)))
 
+(define-public font-hellvetica
+  (package
+    (name "font-hellvetica")
+    (version "1.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri "https://hellveticafont.com/s/Hellvetica.ttf")
+        (sha256
+          (base32
+            "0nkngd2k04w0ay892lmkbmq10y3pmh3gszvgv1aa2zjrg4a5j0x2"))))
+    (build-system font-build-system)
+    (home-page "https://hellveticafont.com/")
+    (synopsis "")
+    (description "")
+    (license silofl1.1)))

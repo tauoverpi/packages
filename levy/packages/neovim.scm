@@ -336,12 +336,31 @@ powerful configuration."
     #:commit "336b3f549cc6028db7bf8a43f725b93250f9cae1"
     #:hash "19wzrydm1qciwagklhl7ln37ax69jfgzfw55k4cxbx7g972dg2s3"
     #:url "https://github.com/slashmili/alchemist.vim"
-    #:directories '(after autoload doc elixir_sense pythonx rplugin syntax t elixir_sense.py elixir_sense_client erl_terms.py)
+    #:directories '(after autoload doc elixir_sense pythonx rplugin syntax t
+                    elixir_sense.py elixir_sense_client erl_terms.py)
     #:tests #f
     #:synopsis ""
     #:description ""
     #:home-page ""
     #:license license:expat))
+
+(define-public neovim-rust
+  (neovim-plugin
+    #:name "neovim-rust"
+    #:version "0.0.0"
+    #:revision "1"
+    #:commit "97fdc4e4975515d8e8a5a82380dd85628d59a005"
+    #:hash "1ggnl9h0jqb3zf8n8vpvlizxb3fikmghwpj8d3xq3ny54wfjgx78"
+    #:url "https://github.com/rust-lang/rust.vim"
+    #:directories '(after autoload compiler ctags doc ftdetect
+                    ftplugin indent plugin syntax syntax_checkers test)
+    #:tests #f
+    #:synopsis "This is a Vim plugin that provides Rust file detection,
+syntax highlighting, formatting, Syntastic integration, and more."
+    #:description "This is a Vim plugin that provides Rust file detection,
+syntax highlighting, formatting, Syntastic integration, and more."
+    #:home-page "https://github.com/rust-lang/rust.vim"
+    #:license #f))
 
 ;(define-public neovim-grammarous
 ;  (package
