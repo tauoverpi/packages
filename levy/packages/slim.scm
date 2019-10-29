@@ -22,10 +22,11 @@
         '(#:modules ((guix build utils))
           #:builder
           (let ((out (assoc-ref %outputs "out"))
+                (themes (string-append out "/share/themes"))
                 (src (assoc-ref %build-inputs "source")))
             (begin (use-modules (guix build utils))
-                   (mkdir out)
-                   (copy-recursively (string-append src "/themes") out)))))
+                   (mkdir-p themes)
+                   (copy-recursively (string-append src "/themes") themes)))))
       (synopsis "")
       (description "")
       (home-page "https://github.com/adi1090x/slim_themes")
