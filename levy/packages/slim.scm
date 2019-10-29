@@ -21,7 +21,7 @@
       (arguments
         '(#:modules ((guix build utils))
           #:builder
-          (let ((out (assoc-ref %outputs "out"))
+          (let* ((out (assoc-ref %outputs "out"))
                 (themes (string-append out "/share/themes"))
                 (src (assoc-ref %build-inputs "source")))
             (begin (use-modules (guix build utils))
