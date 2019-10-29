@@ -8,7 +8,7 @@
         (revision "1"))
     (package
       (name "slim-themes")
-      (version (string-append version "-" revision "." (string-take commit 7)))
+      (version (string-append "0.1.0" "-" revision "." (string-take commit 7)))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
