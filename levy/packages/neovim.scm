@@ -344,6 +344,21 @@ powerful configuration."
     #:home-page ""
     #:license license:expat))
 
+(define-public neovim-lean
+  (neovim-plugin
+    #:name "neovim-lean"
+    #:version "0.0.0"
+    #:revision "1"
+    #:commit "2ace010eb32603a65af7921954a0594a02523c6b"
+    #:hash "0wq2lw4xx2qhz1xii9g7i6wz0y43b2icqrm6ypr9jmaac1rhiq7c"
+    #:url "https://github.com/leanprover/lean.vim"
+    #:directories '(ftdetect syntax)
+    #:tests #f
+    #:synopsis "This plugins provides basic syntax highlighting for Lean files."
+    #:description "This plugins provides basic syntax highlighting for Lean files."
+    #:home-page "https://github.com/leanprover/lean.vim"
+    #:license #f))
+
 (define-public neovim-rust
   (neovim-plugin
     #:name "neovim-rust"
