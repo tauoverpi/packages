@@ -2,6 +2,7 @@
   #:use-module (guix packages)
   #:use-module (guix licenses)
   #:use-module (guix download)
+  #:use-module (guix git-download)
   #:use-module (guix build-system cmake)
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages lua)
@@ -43,3 +44,17 @@
     (synopsis "")
     (description "")
     (license #f)))
+
+;(let ((commit "5d4be4fd3c1f672f1ba551e7582240eb3407659a"))
+;  (package/inherit lean
+;    (name "lean4")
+;    (version "4.0.0")
+;    (source (origin
+;              (method git-fetch)
+;              (uri (git-reference
+;                     (url "https://github.com/leanprover/lean4")
+;                     (commit commit)))
+;              (sha256
+;                (base32
+;                  "1lrm0qdpmlsc0xlhcijmgn8xf5swd4zgjma4gv244xr8k70g320j"))))))
+;
