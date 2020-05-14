@@ -1,3 +1,27 @@
+(define-module (tau packages fonts)
+  #:use-module (guix packages)
+  #:use-module (guix download)
+  #:use-module (guix licenses)
+  #:use-module (guix build-system font))
+
+(define-public font-victor-mono
+  (package
+    (name "font-victor-mono")
+    (version "1.3.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/rubjo/victor-mono/archive/v"
+                                  version
+                                  ".tar.gz"))
+              (sha256
+                (base32
+                  "1yfz2c36yhz7a99sfq0q0d3phjf6m1isd862z4hxl66ravy966sr"))))
+    (build-system font-build-system)
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
 (define-module (levy packages fonts)
   #:use-module (guix packages)
   #:use-module (guix download)

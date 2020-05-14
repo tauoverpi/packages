@@ -1,4 +1,4 @@
-(define-module (levy packages telegram)
+(define-module (tau packages telegram)
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
@@ -31,6 +31,11 @@
         '(#:tests? #f
           #:phases
           (modify-phases %standard-phases
+            (add-before 'build 'hack
+              (lambda _
+                (substitute* "Makefile"
+                  (("-Werror") ""))
+                #t))
             (replace 'install
               (lambda* (#:key inputs outputs #:allow-other-keys)
                 (let* ((out (assoc-ref outputs "out"))

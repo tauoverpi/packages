@@ -1,4 +1,4 @@
-(define-module (levy packages ats)
+(define-module (tau packages ats)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system gnu)

@@ -1,4 +1,4 @@
-(define-module (levy packages mercury)
+(define-module (tau packages mercury)
   #:use-module (guix packages)
   #:use-module (guix licenses)
   #:use-module (guix build-system gnu)
@@ -183,4 +183,3 @@ trade-offs.")
                         (("/bin/sh") (which "sh"))
                         (("/bin/pwd") (which "pwd"))
                         (("/bin/rm") (which "rm"))))))))))
-mercury-rotd

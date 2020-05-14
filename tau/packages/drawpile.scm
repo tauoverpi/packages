@@ -1,4 +1,4 @@
-(define-module (levy packages drawpile)
+(define-module (tau packages drawpile)
  #:use-module (gnu packages qt)
  #:use-module (guix packages)
  #:use-module (guix download)
@@ -31,4 +31,3 @@
     (description "")
     (synopsis "")
     (license #f)))
-
