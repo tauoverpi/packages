@@ -2,10 +2,13 @@
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system cmake)
+  #:use-module (guix build-system gnu)
   #:use-module (gnu packages llvm)
   #:use-module (gnu packages crypto)
   #:use-module (gnu packages benchmark)
   #:use-module (gnu packages check)
+  #:use-module (gnu packages bdw-gc)
+  #:use-module (gnu packages base)
   #:use-module (gnu packages cmake))
 
 (define-public pony
@@ -20,64 +23,65 @@
               (sha256
                 (base32
                   "03hdwzzzkvr3a1k0afxf3ycyj7q6v3l67fxahhllfh1zg8spysin"))))
-    (build-system cmake-build-system)
+    (build-system gnu-build-system)
     (arguments
      `(#:tests? #f
+       #:strip-binaries? #f
        #:phases
        (modify-phases %standard-phases
-         (add-before 'configure 'build-blake
-           (lambda* (#:key inputs outputs #:allow-other-keys)
-             (let ((out (assoc-ref outputs "out")))
-               (call-with-output-file "lib/CMakeLists.txt"
-                 (lambda (port)
-                  (display (string-append "
-cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
-
-file(STRINGS \"../VERSION\" PONYC_PROJECT_VERSION)
-project(ponyclibs VERSION ${PONYC_PROJECT_VERSION} LANGUAGES C CXX)
-
-include(ExternalProject)
-
-if(NOT DEFINED PONYC_LIBS_BUILD_TYPE)
-    set(PONYC_LIBS_BUILD_TYPE Release)
-endif()
-
-add_library(blake2 STATIC blake2/blake2b-ref.c)
-set_property(TARGET blake2 PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-install(TARGETS blake2
-    ARCHIVE DESTINATION lib
-    LIBRARY DESTINATION lib
-    COMPONENT library
-)
-") port)))
-              (setenv "CC" "gcc")
-              (setenv "CXX" "g++")
-              (invoke "make" "libs")
-              #t)))
-         (add-before 'configure 'fix-cmake-files
-           (lambda* (#:key inputs #:allow-other-keys)
+        (replace 'install
+         (lambda* (#:key outputs #:allow-other-keys)
+          (let ((out (assoc-ref outputs "out")))
+            (invoke "make" "install" (string-append "DESTDIR=" out)))))
+        (replace 'build
+         (lambda _
+          (invoke "make" "libs")
+          (invoke "make" "build")))
+        (replace 'configure
+         (lambda* (#:key inputs outputs #:allow-other-keys)
+           (let ((clang (assoc-ref inputs "clang"))
+                 (llvm  (assoc-ref inputs "llvm")))
              (substitute* "src/ponyc/CMakeLists.txt"
               (("llvm_config.ponyc all.") "llvm_config(ponyc all)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 ")
               (("atomic") "atomic Threads::Threads"))
+
+                 (call-with-output-file "lib/CMakeLists.txt"
+                   (lambda (port)
+                    (display (string-append "
+cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+file(STRINGS \"../VERSION\" PONYC_PROJECT_VERSION)
+project(ponyclibs VERSION ${PONYC_PROJECT_VERSION} LANGUAGES C CXX)
+include(ExternalProject)
+if(NOT DEFINED PONYC_LIBS_BUILD_TYPE)
+    set(PONYC_LIBS_BUILD_TYPE Release)
+endif()
+add_library(blake2 STATIC blake2/blake2b-ref.c)
+set_property(TARGET blake2 PROPERTY POSITION_INDEPENDENT_CODE ON)
+install(TARGETS blake2
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    COMPONENT library
+)
+") port)))
              (substitute* "CMakeLists.txt"
-              (("build/libs/lib/cmake/llvm")
-               (string-append (assoc-ref inputs "llvm") "/lib/cmake/llvm"))
+              (("\"build/libs.*") ")\n")
+              ((".*benchmark.*") "")
               ((".*test/.*") "")
               ((".*tests.*") "")
-              ((".*GTest.*") "")
-              ((".*benchmark.*") ""))
-             #t)))))
-;(native-inputs `(("pkg-config" ,pkg-config)))
+              ((".*GTest.*") ""))
+             (setenv "CC" (which "gcc"))
+             (setenv "CXX" (which "g++"))
+             (setenv "LLVM_CONFIG" (string-append llvm "/bin/llvm-config"))
+             (invoke "make" "configure")))))))
+    (native-inputs `(("cmake" ,cmake)))
+    (propagated-inputs `(("gold" ,binutils-gold)))
     (inputs
-      `(("llvm" ,llvm-8)
-        ; TODO: fails to link
-        ;("benchmark" ,benchmark)
-        ;("googletest" ,googletest)
-        ))
+     `(("llvm" ,llvm-9)
+       ("clang" ,clang-9)
+       ("libatomic-ops" ,libatomic-ops)))
     (home-page "")
     (description "")
     (synopsis "")
