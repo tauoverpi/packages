@@ -210,7 +210,7 @@ more see README.md")
          "0210rv7scp2063n8pr39bzy7dbl2777zwdnnx6kp3c34jilssjxg"))))))
 
 (define-public ghc-entangled
-  (let ((commit "d81abf9440cdfb751c65597627b94a105b68fceb")
+  (let ((commit "04ef9771e5bfe5f354783132db484aed8e803971")
         (revision "0"))
     (package
       (name "ghc-entangled")
@@ -223,7 +223,7 @@ more see README.md")
                  (commit commit)))
           (file-name (git-file-name name version))
           (sha256
-            (base32 "0kpm7xd17w0cb3011ql928afxsra9988aycv71pcj6530kn1x0aq"))))
+            (base32 "0xb8igp0gfr6h3c3ynwy1zlwjbgag11x3w2viijdng87bjfzxi34"))))
       (build-system haskell-build-system)
       (inputs
         `(("ghc-either" ,ghc-either)

@@ -11,9 +11,9 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages cmake))
 
-(define-public pony
+(define-public ponyc
   (package
-    (name "pony")
+    (name "ponyc")
     (version "0.35.1")
     (source (origin
               (method url-fetch)
@@ -82,6 +82,31 @@ install(TARGETS blake2
      `(("llvm" ,llvm-9)
        ("clang" ,clang-9)
        ("libatomic-ops" ,libatomic-ops)))
+    (home-page "")
+    (description "")
+    (synopsis "")
+    (license #f)))
+
+(define-public pony-corral
+  (package
+    (name "pony-corral")
+    (version "0.3.5")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/ponylang/corral/archive/"
+                                  version
+                                  ".tar.gz"))
+              (sha256
+                (base32
+                  "0x91imkysz4jyznddz3gs7dpz4sqcr1p8d426b2q8vbafiigli7s"))))
+    (build-system gnu-build-system)
+    (arguments
+      '(#:make-flags (list (string-append "prefix=" %output))
+        #:phases
+        (modify-phases %standard-phases
+          (delete 'check)
+          (delete 'configure))))
+    (inputs `(("ponyc" ,ponyc)))
     (home-page "")
     (description "")
     (synopsis "")
