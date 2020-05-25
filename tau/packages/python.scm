@@ -9,6 +9,25 @@
   #:use-module (gnu packages textutils)
   #:use-module (guix build-system python))
 
+(define-public python-glad
+  (package
+    (name "python-glad")
+    (version "0.1.33")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "glad" version))
+        (sha256
+          (base32
+            "0lrrjlgms2299yi81w4bbad024alw1xcnahjxyc4mmwdsj8vvwfb"))))
+    (build-system python-build-system)
+    (home-page "https://github.com/Dav1dde/glad")
+    (synopsis
+      "Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.")
+    (description
+      "Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.")
+    (license license:expat)))
+
 (define-public python-pmbootstrap
   (package
     (name "python-pmbootstrap")
