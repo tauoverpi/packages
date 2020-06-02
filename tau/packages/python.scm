@@ -3,11 +3,42 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix download)
   #:use-module (gnu packages tls)
+  #:use-module (gnu packages music)
+  #:use-module (gnu packages gtk)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages pdf)
+  #:use-module (gnu packages gnome)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages check)
   #:use-module (gnu packages textutils)
   #:use-module (guix build-system python))
+
+(define-public python-mat2
+  (package
+    (name "python-mat2")
+    (version "0.11.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "mat2" version))
+        (sha256
+          (base32
+            "1zwhgxiim4cm8bwlhjsbdgi84f6jl0d99vdbnqif1ss1xdjrkfdy"))))
+    (build-system python-build-system)
+    (arguments '(#:tests? #f))
+    (propagated-inputs
+      `(("poppler" ,poppler)
+        ("gdk-pixbuf+svg" ,gdk-pixbuf+svg)
+        ("librsvg" ,librsvg)
+        ("python-mutagen" ,python-mutagen)
+        ("python-pycairo" ,python-pycairo)
+        ("python-pygobject" ,python-pygobject)))
+    (home-page "https://0xacab.org/jvoisin/mat2")
+    (synopsis "A handy tool to trash your metadata")
+    (description
+      "A handy tool to trash your metadata")
+    (license #f)))
 
 (define-public python-glad
   (package

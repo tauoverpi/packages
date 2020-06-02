@@ -22,12 +22,27 @@
     (description "")
     (license #f)))
 
-(define-module (levy packages fonts)
-  #:use-module (guix packages)
-  #:use-module (guix download)
-  #:use-module (guix licenses)
-  #:use-module (guix build-system font)
-  #:use-module (gnu packages))
+
+(define-public font-scientifica
+  (package
+    (name "font-scientifica")
+    (version "2.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                     "https://github.com/NerdyPepper/scientifica/releases/download/v"
+                     version
+                     "/scientifica-v"
+                     version
+                     ".tar"))
+              (sha256
+                (base32
+                  "1djsgv6sgfw4kay6wbks3yqgrmbyyxq4i21aqg1hj0w5ww4wwn9i"))))
+    (build-system font-build-system)
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
 
 (define-public font-dotsies
   (package
