@@ -9,10 +9,37 @@
   #:use-module (gnu packages pdf)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages python-web)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages check)
   #:use-module (gnu packages textutils)
   #:use-module (guix build-system python))
+
+(define-public python-pytest-flask
+  (package
+    (name "python-pytest-flask")
+    (version "1.0.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "pytest-flask" version))
+        (sha256
+          (base32
+            "1hln7mwgdzfi5ma0kqfsi768l7p24jhkw8l0imhifwy08nh7hmjd"))))
+    (build-system python-build-system)
+    (native-inputs
+     `(("python-setuptools-scm" ,python-setuptools-scm)))
+    (propagated-inputs
+      `(("python-flask" ,python-flask)
+        ("python-pytest" ,python-pytest)
+        ("python-werkzeug" ,python-werkzeug)))
+    (home-page
+      "https://github.com/vitalk/pytest-flask")
+    (synopsis
+      "A set of py.test fixtures to test Flask applications.")
+    (description
+      "A set of py.test fixtures to test Flask applications.")
+    (license license:expat)))
 
 (define-public python-mat2
   (package

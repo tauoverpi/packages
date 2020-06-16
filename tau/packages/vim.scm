@@ -6,6 +6,38 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system copy))
 
+(define-public neovim-neosnippet
+  (let ((commit "d30231198ce1816165da017607133483ce1efed3"))
+    (package
+      (name "neovim-neosnippet")
+      (version "d302311")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/shougo/neosnippet.vim")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "01hfb16qk3rq3bs9wn40yqcdvk31a8fjrii0r32k2hhn85xg5wji"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("autoload" "share/nvim/site/autoload")
+           ("ftdetect" "share/nvim/site/ftdetect")
+           ("ftplugin" "share/nvim/site/ftplugin")
+           ("plugin" "share/nvim/site/plugin")
+           ("indent" "share/nvim/site/indent")
+           ("doc" "share/nvim/site/doc")
+           ("rplugin" "share/nvim/site/rplugin")
+           ("syntax" "share/nvim/site/syntax"))))
+      (home-page "https://github.com/ziglang/zig.vim")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
+
 (define-public neovim-zig
   (let ((commit "912e9c792702519ca03cd3e3048e8d276a5d3947"))
     (package
