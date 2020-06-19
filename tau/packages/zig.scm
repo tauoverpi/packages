@@ -62,9 +62,10 @@
     (license license:expat)))
 
 ;https://ziglang.org/builds/zig-0.6.0+6524a64bd.tar.xz
+;https://ziglang.org/builds/zig-0.6.0+237c5429b.tar.xz
 (define-public zig-0.6.0
   (package
-    (version "0.6.0+6524a64bd")
+    (version "0.6.0+237c5429b")
     (name "zig-0.6.0")
     (source (origin
               (method url-fetch)
@@ -72,7 +73,7 @@
                                   version ".tar.xz"))
               (sha256
                 (base32
-                  "1g495wkqr2a3rzccpv6ghrwrc16yzklkdyrpfbn35f6vw8rp1xv1"))))
+                  "1r94vcf7jjqxy08jdnbrx8f0hysajxn8spyzc31sdpwpwbinn4ka"))))
     (build-system cmake-build-system)
     (arguments
      `(#:tests? #f
