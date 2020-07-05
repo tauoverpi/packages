@@ -6,6 +6,114 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system copy))
 
+(define-public neovim-gruvbox
+  (let ((commit "040138616bec342d5ea94d4db296f8ddca17007a"))
+    (package
+      (name "neovim-gruvbox")
+      (version "0401386")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/morhetz/gruvbox")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "0qk2mqs04qlxkc1ldgjbiv1yisi2xl2b8svmjz0hdp9y2l5vfccw"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("autoload" "share/nvim/site/autoload")
+           ("colors" "share/nvim/site/colors"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
+(define-public neovim-ale
+  (let ((commit "b3c6db173a019c37c83d4600c0c68872e91086dd"))
+    (package
+      (name "neovim-ale")
+      (version "0401386")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/dense-analysis/ale")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "1szhpagv6gyfh0yfl0rsl94hyd0kfn6kwjl293xj0b4j6h5asm3j"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("autoload" "share/nvim/site/autoload")
+           ("ale_linters" "share/nvim/site/ale_linters")
+           ("doc" "share/nvim/site/doc")
+           ("ftplugin" "share/nvim/site/ftplugin")
+           ("plugin" "share/nvim/site/plugin")
+           ("syntax" "share/nvim/site/syntax")
+           ("rplugin" "share/nvim/site/rplugin"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
+
+(define-public neovim-lightline
+  (let ((commit "afd88109a6e24c4cc0cb55ae70ca66c108f1c540"))
+    (package
+      (name "neovim-lightline")
+      (version "afd8810")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/itchyny/lightline.vim")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "1cjb7klyigsqxv827bxdgp22b8cc5wihb1jfk7a8l63skliyqmg2"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("autoload" "share/nvim/site/autoload")
+           ("doc" "share/nvim/site/doc")
+           ("plugin" "share/nvim/site/plugin"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
+(define-public neovim-vebugger
+  (let ((commit "15ab930a6cfbcf8660ded98c3afd289bed7804b0"))
+    (package
+      (name "neovim-vebugger")
+      (version "15ab930")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/idanarye/vim-vebugger")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "1yg0zsjb5dlspxfamk4afq5mvw1cgr0j7c2m1s9qmp7prrkwg5v1"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("autoload" "share/nvim/site/autoload")
+           ("plugin" "share/nvim/site/plugin")
+           ("doc" "share/nvim/site/doc"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
 (define-public neovim-neosnippet
   (let ((commit "d30231198ce1816165da017607133483ce1efed3"))
     (package
