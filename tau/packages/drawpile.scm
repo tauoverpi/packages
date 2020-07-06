@@ -8,7 +8,7 @@
 (define-public drawpile
   (package
     (name "drawpile")
-    (version "2.1.10")
+    (version "2.1.17")
     (source (origin
               (method url-fetch)
               (uri (string-append "https://github.com/drawpile/Drawpile/archive/"
@@ -16,7 +16,7 @@
                                   ".tar.gz"))
               (sha256
                 (base32
-                  "0m3pri9kfz0gplgslcz4sn36khs03g1457xppczw4s87b168gkg7"))))
+                  "0brscm95nay31xa1c02n1w144gg9hm8pxwa9sfnis0x5dj2nkrb7"))))
     (build-system cmake-build-system)
     (arguments
       '(#:tests? #f))
