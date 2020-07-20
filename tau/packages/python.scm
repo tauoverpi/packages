@@ -9,11 +9,32 @@
   #:use-module (gnu packages pdf)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages vim)
   #:use-module (gnu packages python-web)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages check)
   #:use-module (gnu packages textutils)
   #:use-module (guix build-system python))
+
+(define-public python-neovim
+  (package
+    (name "python-neovim")
+    (version "0.3.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "neovim" version))
+        (sha256
+          (base32
+            "03znibklxyyqx2w05l2r8bcff2qp8kzwbifbvpkg8fs3njjyg856"))))
+    (build-system python-build-system)
+    (propagated-inputs
+      `(("python-pynvim" ,python-pynvim)))
+    (home-page
+      "http://github.com/neovim/python-client")
+    (synopsis "Transition packgage for pynvim")
+    (description "Transition packgage for pynvim")
+    (license #f)))
 
 (define-public python-pytest-flask
   (package

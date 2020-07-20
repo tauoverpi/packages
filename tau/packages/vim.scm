@@ -7,6 +7,87 @@
   #:use-module (gnu packages python-xyz)
   #:use-module (guix build-system copy))
 
+(define-public neovim-pandoc-syntax
+  (let ((commit "0d1129e5cf1b0e3a90e923c3b5f40133bf153f7c"))
+    (package
+      (name "neovim-pandoc-syntax")
+      (version "0d1129e")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/vim-pandoc/vim-pandoc-syntax")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "162l2p8md8lfyfjxzlmlz5ky5kvvr6wjmdk8r8lk6ygpkl2b51f7"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("doc" "share/nvim/site/doc")
+           ("syntax" "share/nvim/site/syntax")
+           ("autoload" "share/nvim/site/autoload")
+           ("plugin" "share/nvim/site/plugin"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
+
+(define-public neovim-deoplete
+  (let ((commit "14ebc58db0c6c0f7b5349a2ef5a4c47a61b8785f"))
+    (package
+      (name "neovim-deoplete")
+      (version "14ebc58")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/shougo/deoplete.nvim")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "1rzck3n5184k8pl0yn77nwa0a4slb6fka05rijd585mfjfx630hf"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("doc" "share/nvim/site/doc")
+           ("rplugin" "share/nvim/site/rplugin")
+           ("autoload" "share/nvim/site/autoload")
+           ("plugin" "share/nvim/site/plugin"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
+(define-public neovim-floobits
+  (let ((commit "2c7aa8adc5fc37f49d0735ac38dc94341252d735"))
+    (package
+      (name "neovim-floobits")
+      (version "2c7aa8a")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/floobits/floobits-neovim")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "0f17jk45zy4yhdzq9sk7mbjsli0fkixgr48xbg5wcvmc28zj2abp"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("doc" "share/nvim/site/doc")
+           ("rplugin" "share/nvim/site/rplugin")
+           ("plugin" "share/nvim/site/plugin"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
+
 (define-public neovim-gruvbox
   (let ((commit "040138616bec342d5ea94d4db296f8ddca17007a"))
     (package
