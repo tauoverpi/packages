@@ -56,7 +56,7 @@ resilient to changing requirements and environments.")
 
 (define-public zig-0.6.0-master
   (package
-    (version "0.6.0+a7c3cec65")
+    (version "0.6.0+4abf119d9")
     (name "zig-0.6.0-master")
     (source (origin
               (method url-fetch)
@@ -64,7 +64,7 @@ resilient to changing requirements and environments.")
                                   version ".tar.xz"))
               (sha256
                 (base32
-                  "06h70xvvqsq9x3q373d2crbv1g089c2b98c7mn2p2fi9z2h24ra2"))))
+                  "08w6ksc3p210gqpm1csqa8ysinsk9l9k5hz446nk8iaag21j36vd"))))
     (build-system cmake-build-system)
     (arguments
      `(#:tests? #f
