@@ -55,7 +55,7 @@ resilient to changing requirements and environments.")
     (license license:expat)))
 
 (define-public zig-0.6.0-master
-  (let ((commit "c0654d2db2cd66ee59f2147fbbb19d890e70bed1"))
+  (let ((commit "69de1a51cd4f43e1d7a1fab3208b835b6841579d"))
     (package
       (version (string-append "0.6.0+" (string-take commit 7)))
       (name "zig-0.6.0-master")
@@ -67,7 +67,7 @@ resilient to changing requirements and environments.")
                 (file-name (git-file-name name version))
                 (sha256
                   (base32
-                    "0y0iddrq8b4g24bjg6g9hwpjkcyz06jf6qs9s4xxwp9had8ynk14"))))
+                    "0f5y2klp6xdpdzibv91wffcq68vk436v4hfidyihydwv9ql4bp8d"))))
       (build-system cmake-build-system)
       (arguments
        `(#:tests? #f
