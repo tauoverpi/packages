@@ -110,19 +110,17 @@
 (define-public python-pmbootstrap
   (package
     (name "python-pmbootstrap")
-    (version "1.14.0")
+    (version "1.22.2")
     (source
       (origin
         (method url-fetch)
         (uri (pypi-uri "pmbootstrap" version))
         (sha256
           (base32
-            "14kjqf6fi7rcsdsb6h0n29b0zkkwsiwdqi477710qgimx3rfbkvf"))))
+            "1ffac7hkz63y94qd08jrhpznan326dz6d37xgylixfh8a34jvc0f"))))
     (build-system python-build-system)
-    (arguments `(#:tests? #f))
+    (arguments '(#:tests? #f))
     (home-page "https://www.postmarketos.org")
-    (propagated-inputs
-     `(("openssl" ,openssl)))
     (synopsis
       "A sophisticated chroot / build / flash tool to develop and install postmarketOS")
     (description

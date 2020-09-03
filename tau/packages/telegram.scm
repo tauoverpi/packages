@@ -53,7 +53,7 @@
           ("jansson" ,jansson)
           ("readline" ,readline)
           ("python" ,python)
-          ("openssl" ,openssl)))
+          ("libressl" ,libressl)))
       (synopsis "")
       (description "")
       (home-page "")

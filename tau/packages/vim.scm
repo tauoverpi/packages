@@ -63,7 +63,7 @@
       (license license:expat))))
 
 (define-public neovim-floobits
-  (let ((commit "2c7aa8adc5fc37f49d0735ac38dc94341252d735"))
+  (let ((commit "29ab2ed4bd5c879df0bd6df313a776155eb98ad8"))
     (package
       (name "neovim-floobits")
       (version "2c7aa8a")
@@ -78,6 +78,7 @@
            (base32
             "0f17jk45zy4yhdzq9sk7mbjsli0fkixgr48xbg5wcvmc28zj2abp"))))
       (build-system copy-build-system)
+      (propagated-inputs `(("python" ,python)))
       (arguments
        '(#:install-plan
          '(("doc" "share/nvim/site/doc")
@@ -222,14 +223,14 @@
            ("doc" "share/nvim/site/doc")
            ("rplugin" "share/nvim/site/rplugin")
            ("syntax" "share/nvim/site/syntax"))))
-      (home-page "https://github.com/ziglang/zig.vim")
+      (home-page "")
       (synopsis "")
       (description "")
       (license license:expat))))
 
 
 (define-public neovim-zig
-  (let ((commit "912e9c792702519ca03cd3e3048e8d276a5d3947"))
+  (let ((commit "3c95b67a76934959f9124e39e64eb14f65f14dc9"))
     (package
       (name "neovim-zig")
       (version "912e9c7")
@@ -242,7 +243,7 @@
           (file-name (git-file-name name version))
           (sha256
            (base32
-            "1svy3bp8rhcbimcp5p4crz57fiv1p2xvcr4xs90frsncq1r483q9"))))
+            "0m152kf9yw7q2slci2bzsqmycl9nxawhhclr4r9k5q87xdrzjqk0"))))
       (build-system copy-build-system)
       (arguments
        '(#:install-plan
