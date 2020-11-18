@@ -13,52 +13,49 @@
   #:use-module (gnu packages compression)
   #:use-module (gnu packages llvm))
 
-(define-public zig-0.6.0
+(define-public zig-0.7.0
   (package
-    (version "0.6.0")
-    (name "zig-0.6.0")
+    (version "0.7.0")
+    (name "zig")
     (source (origin
               (method url-fetch)
-              (uri (string-append "https://ziglang.org/download/0.6.0/zig-"
+              (uri (string-append "https://ziglang.org/download/0.7.0/zig-"
                                   version ".tar.xz"))
               (sha256
                 (base32
-                  "013jkq2lwa39ksgbm978kcxp2qqpkvlkhyyibp9jsa2ljg0ps5jx"))))
+                  "10sz8ibcfgzmj1d8a7x49jlbnl2iqlxikkz9h3dj6mxhqgv2rz8f"))))
     (build-system cmake-build-system)
     (arguments
-     `(#:tests? #f
-       #:phases
+     `(#:phases
        (modify-phases %standard-phases
+         (replace 'check
+           (lambda* (#:allow-other-keys inputs)
+              (invoke "./zig" "test" "src/test/stage1/behaviour.zig")))
          (add-before 'build 'fix-build
            (lambda _
               (setenv "HOME" "/tmp")
               #t)))))
     (inputs
-      `(("llvm" ,llvm-10)
-        ("clang" ,clang-10)
+      `(("llvm" ,llvm-11)
+        ("clang" ,clang-11)
         ("lld" ,lld)
         ("libxml2" ,libxml2)
         ("zlib" ,zlib)))
     (synopsis
-      "Programming languaged designed for robustness, optimality, and clarity")
-    (description "Zig is a general-purpose programming language and toolchain
-for maintaining robust, optimal, and reusable software.
-
-+Robust - behavior is correct even for edge cases such as out of memory.
-+Optimal - write programs the best way they can behave and perform.
-+Reusable - the same code works in many environments which have different
-constraints.
-+Maintainable - precisely communicate intent to the compiler and other
-programmers. The language imposes a low overhead to reading code and is
-resilient to changing requirements and environments.")
+      "Programming language designed for robustness, optimality, and clarity")
+    (description "Zig is a general-purpose programming language and
+toolchain for maintaining robust, optimal, and reusable software. Focus
+on debugging your application rather than debugging your programming
+language knowledge. There is no hidden control flow, no hidden memory
+allocations, no preprocessor, and no macros.")
     (home-page "https://ziglang.org")
     (license license:expat)))
 
-(define-public zig-0.6.0-master
-  (let ((commit "969547902b49d6b21af762fb24ed591789b9d2a4"))
+(define-public zig-0.7.0-master
+  (let ((commit "238718b93abfe97bd5531103cf39714ec66fd86e"))
     (package
-      (version (string-append "0.6.0+" (string-take commit 7)))
-      (name "zig-0.6.0-master")
+      (version (string-append "0.7.0+" (string-take commit 7)))
+      (name "zig-master")
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
@@ -67,7 +64,7 @@ resilient to changing requirements and environments.")
                 (file-name (git-file-name name version))
                 (sha256
                   (base32
-                    "0h9hj9mx0b5msifczw1qdj0y6pcq6mxi7ab3jzn3gsnadkslh64v"))))
+                    "0q4zl6lq7avcfz4z1w7g3kglmz52q16iq0w92qppqa6vc7pc5jhq"))))
       (build-system cmake-build-system)
       (arguments
        `(#:tests? #f
@@ -78,8 +75,8 @@ resilient to changing requirements and environments.")
                 (setenv "HOME" "/tmp")
                 #t)))))
       (inputs
-        `(("llvm" ,llvm-10)
-          ("clang" ,clang-10)
+        `(("llvm" ,llvm-11)
+          ("clang" ,clang-11)
           ("lld" ,lld)
           ("libxml2" ,libxml2)
           ("zlib" ,zlib)))
