@@ -5,7 +5,40 @@
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages python)
   #:use-module (guix build-system copy))
+
+(define-public neovim-elm
+  (let ((commit "4b71facd77297cb33bbb3b14894676cff0a9bd1d"))
+    (package
+      (name "neovim-elm")
+      (version "4b71fac")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "https://github.com/ElmCast/elm-vim")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "1kxkjm6fzmircg5gh7w2bmvjgk8ly5vvq9l31m4p6ql48azg2ilc"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("doc" "share/nvim/site/doc")
+           ("syntax" "share/nvim/site/syntax")
+           ("autoload" "share/nvim/site/autoload")
+           ("plugin" "share/nvim/site/plugin")
+           ("ftplugin" "share/nvim/site/ftplugin")
+           ("rplugin" "share/nvim/site/rplugin")
+           ("indent" "share/nvim/site/indent")
+           ("syntax_checkers/elm" "share/nvim/site/syntax_checkers/elm")
+           ("ftdetect" "share/nvim/site/ftdetect"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
 
 (define-public neovim-pandoc-syntax
   (let ((commit "0d1129e5cf1b0e3a90e923c3b5f40133bf153f7c"))
@@ -34,6 +67,31 @@
       (description "")
       (license license:expat))))
 
+(define-public neovim-clang-format
+  (let ((commit "95593b67723f23979cd7344ecfd049f2f917830f"))
+    (package
+      (name "neovim-clang-format")
+      (version "95593b6")
+      (source
+        (origin
+          (method git-fetch)
+          (uri (git-reference
+                 (url "95593b67723f23979cd7344ecfd049f2f917830f")
+                 (commit commit)))
+          (file-name (git-file-name name version))
+          (sha256
+           (base32
+            "0n0k13k63l8n0ixs4zrhlz923apvdp2mldadxqlhmvsvncmlqmpn"))))
+      (build-system copy-build-system)
+      (arguments
+       '(#:install-plan
+         '(("doc" "share/nvim/site/doc")
+           ("autoload" "share/nvim/site/autoload")
+           ("plugin" "share/nvim/site/plugin"))))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:expat))))
 
 (define-public neovim-deoplete
   (let ((commit "14ebc58db0c6c0f7b5349a2ef5a4c47a61b8785f"))
@@ -115,7 +173,7 @@
       (license license:expat))))
 
 (define-public neovim-ale
-  (let ((commit "b3c6db173a019c37c83d4600c0c68872e91086dd"))
+  (let ((commit "557a1ed5da70cb443a8650766f4e8ea95e8c0da3"))
     (package
       (name "neovim-ale")
       (version "0401386")
@@ -128,7 +186,7 @@
           (file-name (git-file-name name version))
           (sha256
            (base32
-            "1szhpagv6gyfh0yfl0rsl94hyd0kfn6kwjl293xj0b4j6h5asm3j"))))
+            "05bbspz10ic1r0hznkbnb7i6r6rzdkydixf8qf2v36gl6ki3904b"))))
       (build-system copy-build-system)
       (arguments
        '(#:install-plan
@@ -230,7 +288,7 @@
 
 
 (define-public neovim-zig
-  (let ((commit "3c95b67a76934959f9124e39e64eb14f65f14dc9"))
+  (let ((commit "fa5f6d7c5be47bd32dcc69ccf980fc585575cc38"))
     (package
       (name "neovim-zig")
       (version "912e9c7")
@@ -243,7 +301,7 @@
           (file-name (git-file-name name version))
           (sha256
            (base32
-            "0m152kf9yw7q2slci2bzsqmycl9nxawhhclr4r9k5q87xdrzjqk0"))))
+            "0szrnp27ccl93fbn1j9ybsld1l6j3xdrnx6dsf01gdxidm3w60f3"))))
       (build-system copy-build-system)
       (arguments
        '(#:install-plan

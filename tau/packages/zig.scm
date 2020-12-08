@@ -53,7 +53,7 @@ allocations, no preprocessor, and no macros.")
     (license license:expat)))
 
 (define-public zig-0.7.0-master
-  (let ((commit "58365c4e79479157bb0b4c2d66ad96c9a394651d"))
+  (let ((commit "a01d55e801c91b5f8b6beb1ae88640e16ffdf058"))
     (package
       (version (string-append "0.7.0+" (string-take commit 7)))
       (name "zig-master")
@@ -65,12 +65,13 @@ allocations, no preprocessor, and no macros.")
                 (file-name (git-file-name name version))
                 (sha256
                   (base32
-                    "1v997g1vnbmk6jbr2phhrgqbr46p4gv87ncpy88ihg880q8vlm45"))))
+                    "168q5ca9m50nrxz7dla03s3g4bmqf7xldy0p21afga9496sl3d6j"))))
       (build-system cmake-build-system)
       (arguments
        `(#:tests? #f
          #:phases
          (modify-phases %standard-phases
+           (delete 'strip)
            (add-before 'build 'fix-build
              (lambda _
                 (setenv "HOME" "/tmp")
