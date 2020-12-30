@@ -17,21 +17,52 @@
   #:use-module (gnu packages engineering)
   #:use-module (gnu packages image))
 
+(define-public mimalloc
+  (package
+    (name "mimalloc")
+    (version "custom")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                     (url "https://github.com/microsoft/mimalloc")
+                     (commit "a9686d6ecf00e4467e772f7c0b4ef76a15f325f6")))
+                (sha256
+                  (base32
+                    "0b6ymi2a9is2q6n49dvlnjxknikj0rfff5ygbc4n7894h5mllvvr"))))
+    (build-system cmake-build-system)
+    (native-inputs
+      `(("pkg-config" ,pkg-config)))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
+
+(define libdxfrw
+    (origin
+      (method git-fetch)
+      (uri (git-reference
+             (url "https://github.com/solvespace/libdxfrw")
+             (commit "0b7b7b709d9299565db603f878214656ef5e9ddf")))
+      (sha256
+        (base32
+          "0c4ppkhgc250j8mnf682zfqxgyqmsp458ginv9zxahkvzkhyz2hi"))))
+
 (define-public solvespace
-  (let ((commit "b3f739f2c4f75cbdb2613e1fe9cb7fff9b880143")
+  (let ((commit "222c80e4c132f6d1fa1bc0a293660f65874a683f")
         (revision "1"))
     (package
       (name "solvespace")
-      (version "2.3")
+      (version "3.0")
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
                        (url "https://github.com/solvespace/solvespace")
-                       (recursive? #f)
+                       (recursive? #t)
                        (commit commit)))
                 (sha256
                   (base32
-                    "01c8zrygl90sc8kl96p7hxbl1vddj77c0ba6f5zf0s2pk5m1l222"))))
+                    "0hdvc1nibm7qjfvhgg4by7bjr196q5jb4hlr1vr75184xzdhvs7g"))))
       (build-system cmake-build-system)
       (arguments
         '(#:phases
@@ -40,9 +71,7 @@
               (lambda* (#:key inputs outputs #:allow-other-keys)
                 (substitute* "CMakeLists.txt"
                   (("include.GetGitCommitHash.") ""))
-                ;(copy-recursively (assoc-ref inputs "flatbuffers") "extlib/flatbuffers")
                 ;(copy-recursively (assoc-ref inputs "libdxfrw") "extlib/libdxfrw")
-                ;(copy-recursively (assoc-ref inputs "q3d") "extlib/q3d")
                 #t)))))
       (native-inputs
         `(("pkg-config" ,pkg-config)))
@@ -57,7 +86,7 @@
           ("pangomm" ,pangomm)
           ("mesa" ,mesa)
           ("gettext" ,gettext-minimal)
-          ;("q3d" ,q3d)
+          ("mimalloc" ,mimalloc)
           ;("libdxfrw" ,libdxfrw)
           ("flatbuffers" ,flatbuffers)
           ("libspnav" ,libspnav)
