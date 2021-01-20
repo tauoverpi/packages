@@ -52,10 +52,10 @@ allocations, no preprocessor, and no macros.")
     (home-page "https://ziglang.org")
     (license license:expat)))
 
-(define-public zig-0.7.1-master
-  (let ((commit "8ab870cf56e499258e19b23062f1830c73dbe6a3"))
+(define-public zig-0.8-dev
+  (let ((commit "8098b3f84cf24878e3388e056f60aba69033e0f6"))
     (package
-      (version (string-append "0.7.1+" (string-take commit 7)))
+      (version (string-append "0.8-dev+" (string-take commit 7)))
       (name "zig-master")
       (source (origin
                 (method git-fetch)
@@ -65,14 +65,14 @@ allocations, no preprocessor, and no macros.")
                 (file-name (git-file-name name version))
                 (sha256
                   (base32
-                    "1ra0s4mfd0fzpvzxs6m9zxgjj7ycp8kxb6h3m3g68b8d0gwbc9lv"))))
+                    "1vlsdd71aq1l86rkik2b9slyjqq6mfvrkp0fjhrzi2wi1bq1rc67"))))
       (build-system cmake-build-system)
       (arguments
        `(#:tests? #f
          #:phases
          (modify-phases %standard-phases
-           (delete 'strip)
-           (add-before 'build 'fix-build
+           ;(delete 'strip)
+           (add-before 'build 'set-home
              (lambda _
                 (setenv "HOME" "/tmp")
                 #t)))))
