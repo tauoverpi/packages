@@ -53,7 +53,7 @@ allocations, no preprocessor, and no macros.")
     (license license:expat)))
 
 (define-public zig-0.8-dev
-  (let ((commit "8098b3f84cf24878e3388e056f60aba69033e0f6"))
+  (let ((commit "0cfa39304b18c6a04689bd789f5dc4d035ec43b0"))
     (package
       (version (string-append "0.8-dev+" (string-take commit 7)))
       (name "zig-master")
@@ -65,7 +65,7 @@ allocations, no preprocessor, and no macros.")
                 (file-name (git-file-name name version))
                 (sha256
                   (base32
-                    "1vlsdd71aq1l86rkik2b9slyjqq6mfvrkp0fjhrzi2wi1bq1rc67"))))
+                    "1qpv3mwfvdv15b7crizln2184mzyj85cd49znnm9zwlddn9nhyvr"))))
       (build-system cmake-build-system)
       (arguments
        `(#:tests? #f
